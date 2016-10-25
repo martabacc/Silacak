@@ -4,6 +4,12 @@
         <span class="title">Pengguna</span>
     </a>
 </li>
+<li>
+    <a href="<?php echo base_url(); ?>dev/klasifikasi" module="dev-klasifikasi">
+        <i class="fa fa-book"></i>
+        <span class="title">Klasifikasi Jurnal Dev</span>
+    </a>
+</li>
 <!-- <li>
     <a href="<?php echo base_url(); ?>frameworksetting" module="frameworksetting">
         <i class="fa fa-cogs"></i>
