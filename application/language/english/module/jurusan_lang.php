@@ -1,0 +1,32 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+$lang['module_title'] = 'Jurusan';
+$lang['module_subtitle'] = 'Manage';
+$lang['module_description'] = 'Modul ini berfungsi untuk manajemen master Jurusan';
+$lang['module_master'] = 'Daftar Jurusan';
+$lang['module_detail'] = 'Detail Jurusan';
+
+$lang['jur_id'] = 'Kolom_jur_id';
+$lang['jur_id_help'] = 'Help_jur_id';
+$lang['jur_perguruan_tinggi'] = 'Kolom_jur_perguruan_tinggi';
+$lang['jur_perguruan_tinggi_help'] = 'Help_jur_perguruan_tinggi';
+$lang['jur_fakultas'] = 'Kolom_jur_fakultas';
+$lang['jur_fakultas_help'] = 'Help_jur_fakultas';
+$lang['jur_status_validasi'] = 'Kolom_jur_status_validasi';
+$lang['jur_status_validasi_help'] = 'Help_jur_status_validasi';
+$lang['jur_log_audit'] = 'Kolom_jur_log_audit';
+$lang['jur_log_audit_help'] = 'Help_jur_log_audit';
+$lang['jur_nama_indonesia'] = 'Kolom_jur_nama_indonesia';
+$lang['jur_nama_indonesia_help'] = 'Help_jur_nama_indonesia';
+$lang['jur_nama_inggris'] = 'Kolom_jur_nama_inggris';
+$lang['jur_nama_inggris_help'] = 'Help_jur_nama_inggris';
+$lang['jur_dosen_kepala'] = 'Kolom_jur_dosen_kepala';
+$lang['jur_dosen_kepala_help'] = 'Help_jur_dosen_kepala';
+$lang['jur_created_at'] = 'Kolom_jur_created_at';
+$lang['jur_created_at_help'] = 'Help_jur_created_at';
+$lang['jur_updated_at'] = 'Kolom_jur_updated_at';
+$lang['jur_updated_at_help'] = 'Help_jur_updated_at';
+$lang['jur_deleted_at'] = 'Kolom_jur_deleted_at';
+$lang['jur_deleted_at_help'] = 'Help_jur_deleted_at';
+$lang['jur_periode_pelaporan'] = 'Kolom_jur_periode_pelaporan';
+$lang['jur_periode_pelaporan_help'] = 'Help_jur_periode_pelaporan';
