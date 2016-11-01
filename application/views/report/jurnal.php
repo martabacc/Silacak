@@ -6,6 +6,7 @@
 	var kode = "<?php echo $kode; ?>";
 	var kode_jurnal = "<?php echo KODE_JURNAL; ?>";
 	var kode_seminar = "<?php echo KODE_SEMINAR; ?>";
+	
 </script>
 <div class="row">
 	<div class="col-md-12">
@@ -48,6 +49,15 @@
 										<label class="control-label col-md-4"><?php echo $this->lang->line('peg_jurusan'); ?></label>
 										<div class="col-md-8 input-placement">
 											<?php make_object_combobox($list_jurusan, 'jur_id', 'jur_nama_indonesia', array('id'=>'filter_jurusan', 'class'=>'form-control input-medium'), TRUE, TRUE, 'master_all'); ?>
+										</div>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="filter-part col-md-5">
+									<div class="form-group">
+										<label class="control-label col-md-4"><?php echo $this->lang->line('jurnal_jenis');?></label>
+										<div class="col-md-8 input-placement">
+											<?php make_object_combobox($detil_kode_publikasi, 'dkp_id', 'dkp_keterangan', array('id'=>'filter_keterangan', 'class'=>'form-control input-medium'), TRUE, TRUE, 'master_all'); ?>
 										</div>
 									</div>
 								</div>

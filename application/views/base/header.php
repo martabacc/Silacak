@@ -217,6 +217,80 @@
 
                         </ul>
                     </li>
+
+                    <!-- added here -->
+
+                                        <li class="nav-item ">
+                        <a href="javascript:;" class="nav-link nav-toggle" module="dev">
+                            <i class="icon-bar-chart"></i>
+                            <span class="title">Laporan Dev</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/seminar" class="nav-link " module="all_sem">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Seminar</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/jurnal" class="nav-link " module="all_jur">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Jurnal</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/jit" class="nav-link " module="report_jit">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan JIT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/sit" class="nav-link " module="report_sit">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan SIT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/jitt" class="nav-link " module="report_jitt">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan JITT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/sitt" class="nav-link " module="report_sitt">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan SITT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/jnt" class="nav-link " module="report_jnt">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan JNT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/jntt" class="nav-link " module="report_jntt">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan JNTT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/sn" class="nav-link " module="report_sn">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan SN</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/lainnya" class="nav-link " module="report_sn">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Lainnya</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
                     <li class="nav-item ">
                         <a href="<?php echo base_url(); ?>setting" module="setting">
                             <i class="icon-settings"></i>
@@ -224,12 +298,7 @@
                         </a>
                     </li>
                     <?php if($this->auth->is_root()){ $this->load->view('base/sidebar_root'); } ?>
-                    <!-- <li class="last">
-                        <a href="<?php echo base_url(); ?>login/logout">
-                            <i class="fa fa-sign-out"></i>
-                            <span class="title">Logout</span>
-                        </a>
-                    </li> -->
+
                 </ul>
             </div>
         </div>

@@ -233,7 +233,8 @@ class M_publikasi_dosen extends MY_Model {
 					$pub_citation=FALSE,
 					$pub_created_at=FALSE,
 					$pub_updated_at=FALSE,
-					$pub_deleted_at=FALSE){
+					$pub_deleted_at=FALSE)
+	{
 		$data = array();
         if($pub_detilkodepub          !== FALSE)$data['pub_detilkodepub']          =($pub_detilkodepub == '' ? NULL : $pub_detilkodepub);
         if($pub_kode                  !== FALSE)$data['pub_kode']                  =($pub_kode == '' ? NULL : trim($pub_kode));
@@ -334,7 +335,8 @@ class M_publikasi_dosen extends MY_Model {
 					$pub_citation=FALSE,
 					$pub_created_at=FALSE,
 					$pub_updated_at=FALSE,
-					$pub_deleted_at=FALSE){
+					$pub_deleted_at=FALSE)
+	{
 		$data = array();
         if($pub_detilkodepub          !== FALSE)$data['pub_detilkodepub']          =($pub_detilkodepub == '' ? NULL : $pub_detilkodepub);
         if($pub_kode                  !== FALSE)$data['pub_kode']                  =($pub_kode == '' ? NULL : trim($pub_kode));
@@ -457,7 +459,7 @@ class M_publikasi_dosen extends MY_Model {
 
 
 	
-	public function report_by_keterangan($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = KODE_JURNAL) {
+	public function report_by_keterangan($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0) {
 
 		$this->db->select("pub_keterangan as jurnal", FALSE);
 		$this->db->select("COUNT(pub_judul) as jumlah", FALSE);
@@ -530,16 +532,27 @@ class M_publikasi_dosen extends MY_Model {
 		return $query->result();
 	}
 
-	public function get_datatable_by_keterangan($fakultas = false, $jurusan = false, $tahun = false, $kode = KODE_JURNAL) {
+	public function get_datatable_by_keterangan($fakultas = false, $jurusan = false, $tahun = false, $kode = false) {
 
 		$where = 'pub_keterangan IS NOT NULL';
-        $where .= ' AND pub_detilkodepub = ' . $kode;
+
+        if ($kode != false) {
+        	$where .= ' AND pub_detilkodepub = ' . $kode;
+        }
+        else {
+
+        	$where .= ' AND pub_detilkodepub = ' . KODE_JURNAL;
+        }
+
         $where .= ' AND pub_status_tarik = 1 ';
         if ($fakultas != false) {
         	$where .= ' AND peg_fakultas = ' . $fakultas;
         }
         if ($jurusan != false) {
         	$where .= ' AND peg_jurusan = ' . $jurusan;
+        }
+        if ($tahun != false) {
+        	$where .= ' AND YEAR(pub_created_at) = ' . $tahun;
         }
         if ($tahun != false) {
         	$where .= ' AND YEAR(pub_created_at) = ' . $tahun;

@@ -95,3 +95,13 @@ define('TARIK_1', 'Penarikan Data Publikasi');
 define('TARIK_2', 'Penarikan Detil Publikasi');
 
 define('USER_SYSTEM', 3);
+
+
+define('SIT',12);
+define('JIT',11);
+define('SITT',14);
+define('JITT',13);
+define('JNT',15);
+define('JNTT',16);
+define('SNL',17);
+define('L',7);

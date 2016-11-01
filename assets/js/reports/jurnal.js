@@ -19,7 +19,8 @@ $(document).ready(function(){
     $("#filter_fakultas").val(fakultas);
     $('#filter_fakultas').trigger('change');
     $("#filter_jurusan").val(jurusan);
-    $("#filter_kode").val(kode);
+    $("#filter_jurusan").val(jurusan);
+    $("#filter_dkp").val(kode_jurnal);
 
 	$('#btn_reset').click(function() {
         $('#filter_tahun').val('');
@@ -32,6 +33,9 @@ $(document).ready(function(){
 
         $('#filter_kode').prop('selectedIndex', 0);
         $('#filter_kode').trigger('change');
+        
+        $('#filter_dkp').prop('selectedIndex', 0);
+        $('#filter_dkp').trigger('change');
 
         $('#btn_filter').click();
     });

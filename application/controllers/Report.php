@@ -400,7 +400,7 @@ class Report extends CI_Controller {
 
 	public function get_datamaster_keterangan(){
 		//only ajax is allowed
-		if(!$this->input->is_ajax_request()) show_404();
+		// if(!$this->input->is_ajax_request()) show_404();
 
 		//$this->auth->set_access('view');
 		//$this->auth->validate();
@@ -413,6 +413,7 @@ class Report extends CI_Controller {
 
 		$this->load->model('m_publikasi_dosen');
 		//get data
+
 		$this->m_publikasi_dosen->get_datatable_by_keterangan($this->input->post('filter_fakultas'), $this->input->post('filter_jurusan'), $this->input->post('filter_tahun'), $this->input->post('filter_keterangan'));
 	}
 

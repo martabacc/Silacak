@@ -493,7 +493,7 @@ class M_publikasi_dosen extends MY_Model {
 		return $query->result();
 	}
 	
-	public function report_by_keterangan($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = KODE_JURNAL) {
+	public function report_by_keterangan($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0) {
 
 		$this->db->select("pub_keterangan as jurnal", FALSE);
 		$this->db->select("COUNT(pub_judul) as jumlah", FALSE);
@@ -506,7 +506,6 @@ class M_publikasi_dosen extends MY_Model {
         $this->db->join('detil_kode_publikasi', 'pub_detilkodepub = dkp_id', 'left');
 
         $this->db->where('pub_keterangan IS NOT NULL');
-        $this->db->where('pub_detilkodepub = ' . $kode);
         $this->db->where('pub_status_tarik = 1');
         if ($fakultas != 0) {
         	$this->db->where('peg_fakultas = ' . $fakultas);
@@ -517,6 +516,12 @@ class M_publikasi_dosen extends MY_Model {
         if ($tahun != 0) {
         	$this->db->where('YEAR(pub_created_at) = ' . $tahun);
         }
+        if ($kode != 0) {
+        	$this->db->where('pub_detilkodepub = ' . $kode);
+        }
+        else $this->db->where('pub_detilkodepub = ' . KODE_JURNAL);
+
+        
 
         $this->db->group_by("pub_keterangan");
         $this->db->order_by("jumlah desc");
