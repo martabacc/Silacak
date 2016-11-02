@@ -34,13 +34,16 @@
 												<!-- TODO LANGLINE -->
 												Nama File Scopus
 											</th>
-											<th>
-												Ukuran
-											</th>
 										</tr>
 									</thead>
 									<tbody>
-										<!-- harusnya diappend disini -->
+										<?php
+											foreach($result as $r){?>
+											<tr>
+												<?php echo $r?>
+											</tr>
+
+										<?php } ?>
 									</tbody>
 								</table>
 							</form>

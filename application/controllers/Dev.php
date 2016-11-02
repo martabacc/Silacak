@@ -692,10 +692,7 @@ class Dev extends CI_Controller {
 		$this->asset_library->add_js('js/pages/scopus.js');
 
 		$dir = '/var/www/silacak/assets/scopus';
-		$data['result'] = scandir('../../assets/scopus');
-
-		print_r($data);
-		die();
+		$data['result'] = scandir($dir);
 
 		$this->load->view('base/header');
 		$this->load->view('scopus/index', $data);
