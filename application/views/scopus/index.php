@@ -38,11 +38,16 @@
 									</thead>
 									<tbody>
 										<?php
+											$i = 1;
 											foreach($result as $r){?>
 											<tr>
-												<?php echo $r?>
+												<td>
+													<?php echo $i; $i++;?>
+												</td>
+												<td>
+													<?php echo $r?>
+												</td>
 											</tr>
-
 										<?php } ?>
 									</tbody>
 								</table>

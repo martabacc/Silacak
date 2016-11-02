@@ -688,7 +688,7 @@ class Dev extends CI_Controller {
 
 		$this->auth->validate(TRUE, TRUE);
 
-		$this->asset_library->add_masterpage_script();
+		// $this->asset_library->add_masterpage_script();
 		$this->asset_library->add_js('js/pages/scopus.js');
 
 		$dir = '/var/www/silacak/assets/scopus';
