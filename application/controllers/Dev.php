@@ -323,7 +323,7 @@ class Dev extends CI_Controller {
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('all_sem');
 
-		$kode = [SIT,SITT, SNL];
+		$kode = [JIT,JITT];
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
 	}
 
@@ -337,7 +337,7 @@ class Dev extends CI_Controller {
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('all_jur');
 
-		$kode = [JIT,JITT];
+		$kode = [SIT,SITT, SNL];
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);	
 	}
 
@@ -652,7 +652,7 @@ class Dev extends CI_Controller {
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, L);
 	}
 
-	public function issn($fakultas = false, $jurusan = false, $tahun = false, $kode = false) 
+	public function issn() 
 	{
 		//set informasi halaman
 		$this->site_info->set_page_title('Manajemen Data ISSN');
@@ -676,7 +676,7 @@ class Dev extends CI_Controller {
 		$this->load->view('base/footer');
 	}
 
-	public function scopus($fakultas = false, $jurusan = false, $tahun = false, $kode = false) 
+	public function scopus() 
 	{
 		//set informasi halaman
 		$this->site_info->set_page_title('Manajemen Data Scopus');
@@ -691,11 +691,58 @@ class Dev extends CI_Controller {
 		// $this->asset_library->add_masterpage_script();
 		$this->asset_library->add_js('js/pages/scopus.js');
 
-		$dir = '/var/www/silacak/assets/scopus';
+		$dir = 'D:\Kuliah\TugasAkhir';
 		$data['result'] = scandir($dir);
 
 		$this->load->view('base/header');
 		$this->load->view('scopus/index', $data);
+		$this->load->view('base/footer');
+	}
+
+	public function tambahscopus() 
+	{
+		//set informasi halaman
+		$this->site_info->set_page_title('Tambah Data Scopus');
+		//set breadcrumb
+		$this->site_info->add_breadcrumb('Tambah Data Scopus');
+		//add menu highlight
+		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_submodule('upload_scopus');
+
+		$this->auth->validate(TRUE, TRUE);
+
+		// $this->asset_library->add_masterpage_script();
+		$this->asset_library->add_js('js/pages/scopus.js');
+		$dir = '/var/www/silacak/assets/scopus';
+		$dir2 ='D:\Kuliah\TugasAkhir';
+		$data['result'] = scandir($dir);
+
+		$this->load->view('base/header');
+		$this->load->view('scopus/tambah', $data);
+		$this->load->view('base/footer');
+	}
+
+	public function klasifikasiscopus() 
+	{
+		//set informasi halaman
+		$this->site_info->set_page_title('Klasifikasi Scopus');
+		//set breadcrumb
+		$this->site_info->add_breadcrumb('Klasifikasi Scopus');
+		//add menu highlight
+		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_submodule('klas_scopus');
+
+		$this->auth->validate(TRUE, TRUE);
+
+		// $this->asset_library->add_masterpage_script();
+		$this->asset_library->add_js('js/pages/scopus.js');
+		$dir = '/var/www/silacak/assets/scopus';
+
+		$dir2 ='D:\Kuliah\TugasAkhir';
+		$data['result'] = scandir($dir);
+
+		$this->load->view('base/header');
+		$this->load->view('scopus/klasifikasi', $data);
 		$this->load->view('base/footer');
 	}
 }

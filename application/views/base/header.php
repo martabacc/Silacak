@@ -299,6 +299,12 @@
                                     <span class="title">File Scopus</span>
                                 </a>
                             </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/klasifikasiscopus" class="nav-link " module="klas_scopus">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Klasifikasi Scopus</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

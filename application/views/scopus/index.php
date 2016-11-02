@@ -23,7 +23,7 @@
 						</div>
 						<div class="portlet-body">
 							<div class="masterpage-filter form-inline" >
-								<a href="<?php echo base_url()?>/" id="btn-download" class="btn green-seagreen margin-top-10">Tambah Data Scopus</a>
+								<a href="<?php echo base_url()?>/dev/tambahscopus" id="btn-download" class="btn green-seagreen margin-top-10">Tambah Data Scopus</a>
 							</div>
 							<form method="post" action="javascript:void(null);" class="form-master">
 								<table class="table-master table table-striped table-bordered table-hover">
@@ -39,7 +39,11 @@
 									<tbody>
 										<?php
 											$i = 1;
-											foreach($result as $r){?>
+											foreach($result as $r){
+
+
+												if( $r!= '.' && $r != '..'){
+												?>
 											<tr>
 												<td>
 													<?php echo $i; $i++;?>
@@ -48,7 +52,7 @@
 													<?php echo $r?>
 												</td>
 											</tr>
-										<?php } ?>
+										<?php } } ?>
 									</tbody>
 								</table>
 							</form>
