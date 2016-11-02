@@ -277,8 +277,6 @@ class Dev extends CI_Controller {
 				$data['result'] = array_merge($data['result'], $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $z));
 			}
 
-			// redeklarasi $kode, karna $kode dipakai jadi input type hidden di view
-			echo(sizeof($data['result']));
 			$data['kode'] = KODE_JURNAL;
 		}
 		elseif($kode){
@@ -325,7 +323,7 @@ class Dev extends CI_Controller {
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('all_sem');
 
-		$kode = [12,13,14];
+		$kode = [SIT,SITT, SNL];
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
 	}
 
@@ -339,7 +337,8 @@ class Dev extends CI_Controller {
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('all_jur');
 
-		$this->report_by_keterangan($fakultas, $jurusan, $tahun, KODE_JURNAL);	
+		$kode = [JIT,JITT];
+		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);	
 	}
 
 
@@ -636,6 +635,44 @@ class Dev extends CI_Controller {
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('report_snl');
 
-		$this->report_by_keterangan($fakultas, $jurusan, $tahun, SN);
+		$this->report_by_keterangan($fakultas, $jurusan, $tahun, SNL);
+	}
+
+
+	public function lainnya($fakultas = false, $jurusan = false, $tahun = false, $kode = false) 
+	{
+		//set informasi halaman
+		$this->site_info->set_page_title('Laporan Publikasi'. $this->lang->line('l'));
+		//set breadcrumb
+		$this->site_info->add_breadcrumb('Laporan Publikasi'. $this->lang->line('l'));
+		//add menu highlight
+		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_submodule('report_l');
+
+		$this->report_by_keterangan($fakultas, $jurusan, $tahun, L);
+	}
+
+	public function issn($fakultas = false, $jurusan = false, $tahun = false, $kode = false) 
+	{
+		//set informasi halaman
+		$this->site_info->set_page_title('Manajemen Data ISSN');
+		//set breadcrumb
+		$this->site_info->add_breadcrumb('Manajemen Data ISSN');
+		//add menu highlight
+		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_submodule('manage_issn');
+
+		$this->auth->validate(TRUE, TRUE);
+
+		$this->asset_library->add_masterpage_script();
+
+		$this->load->model('m_data_issn');
+
+		//load view
+		$data['result'] = $this->m_data_issn->get();
+
+		$this->load->view('base/header');
+		$this->load->view('issn/index', $data);
+		$this->load->view('base/footer');
 	}
 }

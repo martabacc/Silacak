@@ -18,7 +18,7 @@
 						<div class="portlet-title">
 							<div class="caption">
 								<i class="fa fa-user font-green-seagreen"></i>
-								<span class="caption-subject bold font-green-seagreen uppercase"><?php if ($kode == KODE_JURNAL) echo $this->lang->line('report_jurnal_master'); else echo $this->lang->line('report_seminar_master'); ?></span>
+								<span class="caption-subject bold font-green-seagreen uppercase"><?php if (in_array($kode,[JIT,JITT]) ) echo $this->lang->line('report_jurnal_master'); else echo $this->lang->line('report_seminar_master'); ?></span>
 							</div>
 							<div class="actions filter-control">
 								<div class="btn-group main-control"></div>
@@ -72,7 +72,7 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th><?php if ($kode == KODE_JURNAL) echo $this->lang->line('report_jurnal_table'); else echo $this->lang->line('report_seminar_table'); ?></th>
+											<th><?php if (in_array($kode,[JIT,JITT])) echo $this->lang->line('report_jurnal_table'); else echo $this->lang->line('report_seminar_table'); ?></th>
 											<th><?php echo $this->lang->line('penarikan_total'); ?></th>
 										</tr>
 									</thead>

@@ -64,9 +64,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '10.199.14.30',
 	'username' => 'sa',
-	'password' => 'Password123',
+	'password' => 'ar4rfv.',
 	'database' => 'pelacakan',
 	'dbdriver' => 'sqlsrv',
 	'dbprefix' => '',

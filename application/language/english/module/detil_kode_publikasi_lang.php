@@ -24,4 +24,6 @@ $lang['sitt'] = 'Seminar Internasional tidak terindeks';
 $lang['jnt'] = 'Jurnal Nasional Terakreditasi';
 $lang['jntt'] = 'Jurnal Nasional Tidak Terakreditasi';
 $lang['snl'] = 'Seminar Nasional';
-$lang['l'] = 'Lain-lain';
+$lang['l'] = 'Lainnya';
+
+// TODO dipisah lang untuk data issn dan scopus

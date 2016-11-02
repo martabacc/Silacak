@@ -282,9 +282,21 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>dev/lainnya" class="nav-link " module="report_sn">
+                                <a href="<?php echo base_url(); ?>dev/lainnya" class="nav-link " module="report_l">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Lainnya</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/issn" class="nav-link " module="manage_issn">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Data ISSN</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/scopus" class="nav-link " module="upload_scopus">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">File Scopus</span>
                                 </a>
                             </li>
                         </ul>
