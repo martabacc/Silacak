@@ -14,7 +14,7 @@
 								<i class="fa fa-user font-green-seagreen"></i>
 								<span class="caption-subject bold font-green-seagreen uppercase">
 								<!-- TODO LANGLINE-->
-								Data ISSN
+								Data Scopus
 								</span>
 							</div>
 							<div class="actions filter-control">
@@ -23,7 +23,7 @@
 						</div>
 						<div class="portlet-body">
 							<div class="masterpage-filter form-inline" >
-								<a href="<?php echo base_url()?>/" id="btn-download" class="btn green-seagreen margin-top-10">Tambah Data ISSN</a>
+								<a href="<?php echo base_url()?>/" id="btn-download" class="btn green-seagreen margin-top-10">Tambah Data Scopus</a>
 							</div>
 							<form method="post" action="javascript:void(null);" class="form-master">
 								<table class="table-master table table-striped table-bordered table-hover">
@@ -32,10 +32,10 @@
 											<th>No</th>
 											<th>
 												<!-- TODO LANGLINE -->
-												Judul ISSN
+												Nama File Scopus
 											</th>
 											<th>
-												Nomor ISSN
+												Ukuran
 											</th>
 										</tr>
 									</thead>

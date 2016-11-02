@@ -665,7 +665,7 @@ class Dev extends CI_Controller {
 		$this->auth->validate(TRUE, TRUE);
 
 		$this->asset_library->add_masterpage_script();
-
+		$this->asset_library->add_js('js/pages/issn.js');
 		$this->load->model('m_data_issn');
 
 		//load view
@@ -673,6 +673,32 @@ class Dev extends CI_Controller {
 
 		$this->load->view('base/header');
 		$this->load->view('issn/index', $data);
+		$this->load->view('base/footer');
+	}
+
+	public function scopus($fakultas = false, $jurusan = false, $tahun = false, $kode = false) 
+	{
+		//set informasi halaman
+		$this->site_info->set_page_title('Manajemen Data Scopus');
+		//set breadcrumb
+		$this->site_info->add_breadcrumb('Manajemen Data Scopus');
+		//add menu highlight
+		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_submodule('upload_scopus');
+
+		$this->auth->validate(TRUE, TRUE);
+
+		$this->asset_library->add_masterpage_script();
+		$this->asset_library->add_js('js/pages/scopus.js');
+
+		$dir = '/var/www/silacak/assets/scopus';
+		$data['result'] = scandir('../../assets/scopus');
+
+		print_r($data);
+		die();
+
+		$this->load->view('base/header');
+		$this->load->view('scopus/index', $data);
 		$this->load->view('base/footer');
 	}
 }
