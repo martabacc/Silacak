@@ -32,7 +32,7 @@
 											<th>No</th>
 											<th>
 												<!-- TODO LANGLINE -->
-												Judul ISSN
+												Nama Jurnal
 											</th>
 											<th>
 												Nomor ISSN

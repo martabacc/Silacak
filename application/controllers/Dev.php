@@ -320,10 +320,10 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb($this->lang->line('report_seminar'));
 		//add menu highlight
+		$kode = [SIT,SITT, SNL];
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('all_sem');
 
-		$kode = [JIT,JITT];
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
 	}
 
@@ -337,7 +337,7 @@ class Dev extends CI_Controller {
 		$this->site_info->set_current_module('dev');
 		$this->site_info->set_current_submodule('all_jur');
 
-		$kode = [SIT,SITT, SNL];
+		$kode = [JIT,JITT];
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);	
 	}
 
@@ -691,7 +691,8 @@ class Dev extends CI_Controller {
 		// $this->asset_library->add_masterpage_script();
 		$this->asset_library->add_js('js/pages/scopus.js');
 
-		$dir = 'D:\Kuliah\TugasAkhir';
+		$dir = '/var/www/silacak/assets/scopus';
+		$dir2 ='D:\Kuliah\TugasAkhir';
 		$data['result'] = scandir($dir);
 
 		$this->load->view('base/header');
