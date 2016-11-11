@@ -16,16 +16,13 @@ class M_data_issn extends MY_Model {
 	public function select(){
 		$this->db->select('issn_id');
 		$this->db->select('issn_judul');
-		$this->db->select('issn_number');
 
 		$this->db->from('data_issn');
 
 	}
 	
-	public function insert($issn_judul=false,
-					$issn_number=false){
+	public function insert($issn_judul=false){
 		$data = array();
-        if($issn_number       !== false)$data['issn_number']       =trim($issn_number);
         if($issn_judul      !== false)$data['issn_judul']      =trim($issn_judul);
 
 		$this->db->insert('data_issn', $data);
@@ -33,13 +30,25 @@ class M_data_issn extends MY_Model {
 	}
 
 	public function update($issn_judul=false,
-					$issn_id=false,
-					$issn_number=false){
+					$issn_id=false){
 		$data = array();
         if($issn_judul       !== false)$data['issn_judul']       =trim($issn_judul);
         if($issn_id      !== false)$data['issn_id']      =trim($issn_id);
-        if($issn_number     !== false)$data['issn_number']     =trim($issn_number);
 
 		return $this->db->update('data_issn', $data, "issn_id = '$issn_id'");
+	}
+
+	// for ajax reason
+		/**
+	* @author Doni's Generator
+	* Fungsi untuk datatable
+	* @param type $where where
+	*/
+	public function get_datatable($where=''){
+		$cols = array(
+						array('db' => 'issn_id'               , 'alias' => 'issn_id'               , 'searchable' => FALSE),
+						array('db' => 'issn_judul' , 'alias' => 'issn_judul' , 'searchable' => FALSE)
+		);
+		parent::parse_datatable($cols, $where);
 	}
 }

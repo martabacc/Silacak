@@ -17,6 +17,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Maven+Pro:500' rel='stylesheet' type='text/css'>
     <?php
+        $this->asset_library->add_js('plugins/jquery.min.js', 'core-plugin-part-1');
         $this->asset_library->add_css('plugins/font-awesome/css/font-awesome.min.css', 'core-style');
         $this->asset_library->add_css('plugins/simple-line-icons/simple-line-icons.min.css', 'core-style');
         $this->asset_library->add_css('plugins/bootstrap/css/bootstrap.min.css', 'core-style');

@@ -27,7 +27,6 @@
     <![endif]-->
     <?php
 
-        $this->asset_library->add_js('plugins/jquery.min.js', 'core-plugin-part-1');
         $this->asset_library->add_js('plugins/jquery-migrate.min.js', 'core-plugin-part-1');
         $this->asset_library->add_js('plugins/jquery-ui/jquery-ui.min.js', 'core-plugin-part-1');
         $this->asset_library->add_js('plugins/bootstrap/js/bootstrap.min.js', 'core-plugin-part-1');

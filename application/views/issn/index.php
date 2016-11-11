@@ -23,19 +23,16 @@
 						</div>
 						<div class="portlet-body">
 							<div class="masterpage-filter form-inline" >
-								<a href="<?php echo base_url()?>/" id="btn-download" class="btn green-seagreen margin-top-10">Tambah Data ISSN</a>
+								<a href="<?php echo base_url()?>issn/add_data" id="btn-download" class="btn green-seagreen margin-top-10">Data ISSN</a>
 							</div>
 							<form method="post" action="javascript:void(null);" class="form-master">
 								<table class="table-master table table-striped table-bordered table-hover">
 									<thead>
 										<tr>
-											<th>No</th>
+											<th>Check</th>
 											<th>
 												<!-- TODO LANGLINE -->
 												Nama Jurnal
-											</th>
-											<th>
-												Nomor ISSN
 											</th>
 										</tr>
 									</thead>
