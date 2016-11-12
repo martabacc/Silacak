@@ -15,7 +15,7 @@
 				</div>
 				<div class="portlet-body form">
 					<form action="" method="POST" class="form-detail form-horizontal form-bordered form-label-stripped">
-
+						<input type="hidden" id='tkn' name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 						<div class="form-body">
 							<div class="form-group">
 								<label class="control-label col-md-3">
@@ -36,7 +36,7 @@
 							<div class="row">
 								<div class="col-md-offset-3 col-md-9">
 									<div class="detail-control">
-										<button id="btn-save" type='submit' class="btn green-seagreen mp-save-button">
+										<button id="btn-save" type='button' class="btn green-seagreen mp-save-button">
 											<i class="fa fa-plus"></i> <span>Tambah Data Issn</span>
 										</button>
 									</div>
@@ -49,12 +49,3 @@
 		</div>
 	</div>
 </div>
-
-<script type='javascript'>
-
-$(document).ready(function(){
-	$('button#btn-save').click(function(){
-		console.log('asdfasdf');
-	});
-});
-</script>

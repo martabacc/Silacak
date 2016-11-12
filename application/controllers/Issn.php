@@ -20,15 +20,8 @@ class Issn extends CI_Controller {
 		//$this->auth->validate(TRUE, TRUE);
 
 		//load this page model
-		$this->load->model('m_anggota');
+		$this->load->model('m_data_issn');
 
-		//load foregin lang if exist
-		$this->lang->load('module/pegawai');
-		$this->lang->load('module/publikasi_dosen');
-		$this->lang->load('module/citation');
-
-		//load lang, place this module after foreign lang, so module_ not overriden by foreign lang
-		$this->lang->load('module/anggota');
   	}
 
 	/*
@@ -160,13 +153,23 @@ class Issn extends CI_Controller {
 	 * @access	public
 	 * @return		json string result ok or error
 	 */
-	public function add(){
-		//$this->auth->set_access('add');
-		// $this->auth->validate();
+	public function edd(){
 
-		//call save method
-		//validation
-		$this->save();
+		$this->auth->validate(TRUE, TRUE);
+			//validation
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('issn_judul'       , 'lang:issn_judul'       , 'required');
+		if ($this->form_validation->run())
+		{
+			$issn_id = $this->m_data_issn->insert(
+				$this->input->post('issn_judul')
+			);
+			echo 'asdfasdfdsaf';
+		}
+		else
+		{ 
+			echo  'error';
+		}
 	}
 
 	public function add_data(){
@@ -189,7 +192,8 @@ class Issn extends CI_Controller {
 		}
 		else if($this->input->server('REQUEST_METHOD') == 'POST'){
 
-			//validation
+			$this->auth->validate(TRUE, TRUE);
+				//validation
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('issn_judul'       , 'lang:issn_judul'       , 'required');
 			if ($this->form_validation->run())
@@ -197,14 +201,12 @@ class Issn extends CI_Controller {
 				$issn_id = $this->m_data_issn->insert(
 					$this->input->post('issn_judul')
 				);
-				write_log('issn', 'insert', "PK = $issn_id");
-				return 'asdfasdfdsaf';
+				ajax_response();
 			}
 			else
 			{ 
-				return validation_errors();
+				echo  'error';
 			}
-			
 		}
 	}
 	/*
