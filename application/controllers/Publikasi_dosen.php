@@ -818,6 +818,61 @@ class Publikasi_dosen extends CI_Controller {
 		$this->m_publikasi_dosen->reset_status();
 	}
 
+	public function getdatamaster_listpub(){
+
+		if(!$this->input->is_ajax_request()) show_404();
+
+
+		$result = $this->m_publikasi_dosen->get_by_column($journalName, 'pub_keterangan',9999);
+
+		echo json_encode($result);
+		//$this->auth->set_access('delete');
+		//$this->auth->validate();
+	}
 	
+	public function listpub(){
+		//$this->auth->set_access('view');
+		$this->auth->validate(TRUE, TRUE);
+		$journalName = $this->input->post('journalName') ;
+
+		//set informasi halaman
+		$this->site_info->set_page_title($this->lang->line('module_title'), $this->lang->line('module_subtitle'));
+		//set breadcrumb
+		$this->site_info->add_breadcrumb($this->lang->line('module_title'));
+		//add menu highlight
+		$this->site_info->set_current_module('publikasi_dosen');
+
+		//add masterpage script
+		$this->asset_library->add_masterpage_script();
+		//add page javascript
+		$this->asset_library->add_js('js/pages/publikasi_dosen.js');
+		$this->asset_library->add_js('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
+		$this->asset_library->add_js('plugins/jquery-sortable.js');
+		$this->asset_library->add_js('plugins/jquery-inputmask/jquery.inputmask.bundle.js');
+		$this->asset_library->add_css('plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css', 'core-style');
+        $pegawai = -1;
+        $pegawai_name = "";
+        $status_tarik = -1;
+        if($this->input->get("pegawai") != null){
+        	$pegawai = $this->input->get("pegawai");
+        	$pegawai_name = $this->m_pegawai->get_by_column($pegawai)->peg_name;
+
+        }
+
+        if($this->input->get("status_tarik") != null){
+        	$status_tarik = $this->input->get("status_tarik");
+        }
+
+		$data = array();
+		$this->load->model('m_detil_kode_publikasi');
+		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('', 'dkp_keterangan asc');
+		$data["pegawai"] = $pegawai;
+		$data["pegawai_name"] = $pegawai_name;
+		$data["status_tarik"] = $status_tarik;
+		//load view
+		$this->load->view('base/header');
+		$this->load->view('publikasi_dosen/master', $data);
+		$this->load->view('base/footer');
+	}
 	
 }

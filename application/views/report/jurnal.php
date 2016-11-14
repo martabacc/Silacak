@@ -6,8 +6,7 @@
 	var kode = "<?php echo $kode; ?>";
 	var kode_jurnal = "<?php echo KODE_JURNAL; ?>";
 	var kode_seminar = "<?php echo KODE_SEMINAR; ?>";
-	
-</script>
+	</script>
 <div class="row">
 	<div class="col-md-12">
 		<!-- <div class="note note-warning">
@@ -34,7 +33,12 @@
 										</div>
 									</div>
 								</div>
+								<form method="post" action="<?php echo base_url()?>publikasi_dosen/listpub" style='display:none;'>
 								<input type="hidden" id="filter_keterangan" value="<?php echo $kode; ?>" />
+								<input type="hidden" id="csrf_token" value="<?php echo $this->security->get_csrf_hash();?>" />
+								<input type="hidden" name="journalName" id='journalName'>
+								<input type='submit' id='hiddenSubmit' style='display:none'>
+								</form>
 								<div class="filter-part col-md-5">
 									<div class="form-group">
 										<label class="control-label col-md-4"><?php echo $this->lang->line('pub_tahun'); ?></label>
@@ -76,11 +80,15 @@
 											<th><?php echo $this->lang->line('penarikan_total'); ?></th>
 										</tr>
 									</thead>
-									<tbody></tbody>
+									<tbody id='lolo'>
+										
+									</tbody>
 								</table>
 							</form>
 						</div>
 					</div>
 		</div>
+
 	</div>
 </div>
+
