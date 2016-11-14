@@ -62,7 +62,7 @@ $(document).ready(function(){
         dataUrl: base_url + 'report/get_datamaster_keterangan',
         // detailUrl: base_url + 'publikasi_dosen/listpub',
         // addUrl: base_url + 'publikasi_dosen/add',
-        editUrl: base_url + 'publikasi_dosen/listpub',
+        // editUrl: base_url + 'publikasi_dosen/listpub',
         // deleteUrl: base_url + 'anggota/delete',
         access: { add: false, edit: false, delete: false, refresh: true },
         cols: [
@@ -90,30 +90,8 @@ $(document).ready(function(){
         validation: {},
         selectCallback: function(clicked_data, options){
             // get data
-            $.ajax({
-                data : {csrf_token : $('#csrf_token').val() , journalName : clicked_data[0]},
-                method : 'POST',
-                url : base_url + 'publikasi_dosen/listpub',
-                success : function(msg){
-                    var result = [];
-                    var lala = $.parseJSON(msg);
-                    var array = $.makeArray(lala);
-                    var dd = [];
-                    for (var x in array){
-                        var arr = $.map(x, function(value, index) {
-                            return [value];
-                        });
-                        console.log(arr);
-                    }
-                    console.log(dd);
-
-
-                    $('#master-page').html('');
-                    $('#master-pub').show();
-                    $('#master-pub').DataTable({  'data' : array,
-                                                });
-                }
-            });
+            $('input[name="journalName"]').val(clicked_data[0]);
+            $('#hiddenSubmit').click();
 
         }
     });

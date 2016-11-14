@@ -820,32 +820,70 @@ class Publikasi_dosen extends CI_Controller {
 
 	public function getdatamaster_listpub(){
 
+		// $result = $this->m_publikasi_dosen->get_by_column($journalName, 'pub_keterangan',9999);
+
+		// echo json_encode($result);
+
+				//only ajax is allowed
 		if(!$this->input->is_ajax_request()) show_404();
 
-
-		$result = $this->m_publikasi_dosen->get_by_column($journalName, 'pub_keterangan',9999);
-
-		echo json_encode($result);
-		//$this->auth->set_access('delete');
+		//$this->auth->set_access('view');
 		//$this->auth->validate();
+
+		$filter_cols = array('pub_detilkodepub' => /*uintval(*/$this->input->post('pub_detilkodepub'),  'pub_status_tarik' => $this->input->post('pub_status_tarik')/*, TRUE)*/);
+		
+		$add_where = '';
+		//set default where query
+		if ($this->input->post('pub_startyear') != "")
+			$add_where = 'pub_tahun >= ' . $this->input->post('pub_startyear');
+		if ($this->input->post('pub_endyear') != "")
+		{
+			if ($add_where != '') $add_where .= ' AND ';
+			$add_where .= 'pub_tahun <= ' . $this->input->post('pub_endyear');
+		}
+		if ($this->input->get('jname') != "")
+		{
+			if ($add_where != '') $add_where .= ' AND ';
+			$add_where .= 'pub_keterangan like "%' . $this->input->get('jname') .'%"';
+		}
+
+		if ($this->input->post('pub_pegawai') != '')
+		{
+			if ($add_where != '') $add_where .= ' AND ';
+			$add_where .= 'ang_pegawai = ' .$this->input->post('pub_pegawai');
+			$unfiltered = 2;
+
+
+		}
+		else {
+			$unfiltered = 0;
+		}
+			
+		$where = build_masterpage_filter($filter_cols, $add_where);
+
+		//get data
+		$this->m_publikasi_dosen->get_datatable($unfiltered, $where);
 	}
 	
 	public function listpub(){
-		//$this->auth->set_access('view');
 		$this->auth->validate(TRUE, TRUE);
+
 		$journalName = $this->input->post('journalName') ;
 
 		//set informasi halaman
-		$this->site_info->set_page_title($this->lang->line('module_title'), $this->lang->line('module_subtitle'));
+		$this->site_info->set_page_title('Detail Publikasi : ' . $journalName);
 		//set breadcrumb
-		$this->site_info->add_breadcrumb($this->lang->line('module_title'));
+
+		$this->site_info->add_breadcrumb('Laporan');
+		$this->site_info->add_breadcrumb('Detail Publikasi');
 		//add menu highlight
-		$this->site_info->set_current_module('publikasi_dosen');
+		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_submodule('report_jit');
 
 		//add masterpage script
 		$this->asset_library->add_masterpage_script();
 		//add page javascript
-		$this->asset_library->add_js('js/pages/publikasi_dosen.js');
+		$this->asset_library->add_js('js/pages/detailpub.js');
 		$this->asset_library->add_js('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
 		$this->asset_library->add_js('plugins/jquery-sortable.js');
 		$this->asset_library->add_js('plugins/jquery-inputmask/jquery.inputmask.bundle.js');
@@ -868,6 +906,7 @@ class Publikasi_dosen extends CI_Controller {
 		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('', 'dkp_keterangan asc');
 		$data["pegawai"] = $pegawai;
 		$data["pegawai_name"] = $pegawai_name;
+		$data["jname"] = $this->input->post('journalName');
 		$data["status_tarik"] = $status_tarik;
 		//load view
 		$this->load->view('base/header');

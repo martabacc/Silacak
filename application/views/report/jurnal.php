@@ -35,7 +35,7 @@
 								</div>
 								<form method="post" action="<?php echo base_url()?>publikasi_dosen/listpub" style='display:none;'>
 								<input type="hidden" id="filter_keterangan" value="<?php echo $kode; ?>" />
-								<input type="hidden" id="csrf_token" value="<?php echo $this->security->get_csrf_hash();?>" />
+								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>" />
 								<input type="hidden" name="journalName" id='journalName'>
 								<input type='submit' id='hiddenSubmit' style='display:none'>
 								</form>
@@ -71,7 +71,7 @@
 								<hr class="no-margin"/>
 								<a href="#" id="btn-download" class="btn green-seagreen margin-top-10">Download Laporan</a>
 							</div>
-							<form method="post" action="javascript:void(null);" class="form-master">
+							<!-- <form method="post" action="javascript:void(null);" class="form-master"> -->
 								<table class="table-master table table-striped table-bordered table-hover">
 									<thead>
 										<tr>
@@ -84,7 +84,7 @@
 										
 									</tbody>
 								</table>
-							</form>
+							<!-- </form> -->
 						</div>
 					</div>
 		</div>

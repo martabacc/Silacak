@@ -70,6 +70,10 @@ ol.ol-anggota li.placeholder:before {
 							</div>
 						</div>
 						<div class="clearfix"></div>
+						<?php if(isset($jname)){ ?>
+							<input type='hidden' name='jname' value='<?php echo $jname?>'>
+						<?php }
+						?>
 						<div class="filter-part col-md-5">
 							<div class="row">
 								<div class="form-group">
