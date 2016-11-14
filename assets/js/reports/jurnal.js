@@ -22,6 +22,7 @@ $(document).ready(function(){
     $("#filter_jurusan").val(jurusan);
     $("#filter_dkp").val(kode_jurnal);
 
+
 	$('#btn_reset').click(function() {
         $('#filter_tahun').val('');
 
@@ -54,14 +55,15 @@ $(document).ready(function(){
         window.location = base_url + "report/download_by_keterangan/" + fak + "/" + jur + "/" + tahun + "/" + kode;
     });
 
+     var zz = null;
     $('#master-page').masterPage({
         primaryKey: 'pub_keterangan',
         detailFocusId: 'pub_keterangan',
         dataUrl: base_url + 'report/get_datamaster_keterangan',
-        detailUrl: base_url + 'publikasi_dosen/detail',
-        addUrl: base_url + 'publikasi_dosen/add',
-        editUrl: base_url + 'publikasi_dosen/edit',
-        deleteUrl: base_url + 'anggota/delete',
+        // detailUrl: base_url + 'publikasi_dosen/listpub',
+        // addUrl: base_url + 'publikasi_dosen/add',
+        editUrl: base_url + 'publikasi_dosen/listpub',
+        // deleteUrl: base_url + 'anggota/delete',
         access: { add: false, edit: false, delete: false, refresh: true },
         cols: [
             /* No */
@@ -73,10 +75,10 @@ $(document).ready(function(){
                         return meta.row + 1 + meta.settings._iDisplayStart;
                     }
                },
-            /* jurnal - 1 */
-            { visible:    true },
+            /* nama jurnal - 1 */
+            { className : 'judulJurnal' , 'visible':    true },
             /* jumlah - 2 */
-            { visible:    true }
+            { 'visible':    true }
         ],
         filters: [],
         additionalInput: 
@@ -85,6 +87,35 @@ $(document).ready(function(){
             {id:'filter_tahun', submittedName:'filter_tahun'},
             {id:'filter_keterangan', submittedName:'filter_keterangan'}],
         orders: [[2, 'desc']],
-        validation: {}
+        validation: {},
+        selectCallback: function(clicked_data, options){
+            // get data
+            $.ajax({
+                data : {csrf_token : $('#csrf_token').val() , journalName : clicked_data[0]},
+                method : 'POST',
+                url : base_url + 'publikasi_dosen/listpub',
+                success : function(msg){
+                    var result = [];
+                    var lala = $.parseJSON(msg);
+                    var array = $.makeArray(lala);
+                    var dd = [];
+                    for (var x in array){
+                        var arr = $.map(x, function(value, index) {
+                            return [value];
+                        });
+                        console.log(arr);
+                    }
+                    console.log(dd);
+
+
+                    $('#master-page').html('');
+                    $('#master-pub').show();
+                    $('#master-pub').DataTable({  'data' : array,
+                                                });
+                }
+            });
+
+        }
     });
+
 });

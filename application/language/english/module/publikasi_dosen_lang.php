@@ -6,6 +6,7 @@ $lang['module_description'] = 'Modul ini berfungsi untuk manajemen master publik
 $lang['module_master'] = 'Daftar Publikasi';
 $lang['module_detail'] = 'Sunting Publikasi';
 $lang['module_anggota_master'] = 'Daftar Pengarang';
+$lang['module_publikasi_list'] = 'List Publikasi';
 
 $lang['pub_id'] = 'ID';
 $lang['pub_id_help'] = '';

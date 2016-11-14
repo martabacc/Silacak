@@ -143,7 +143,9 @@ ol.ol-anggota li.placeholder:before {
 									<th style="white-space:pre; vertical-align:middle;"><?php echo $this->lang->line('pub_status_tarik'); ?></th>
 								</tr>
 							</thead>
-							<tbody></tbody>
+							<tbody>
+								
+							</tbody>
 						</table>
 					</form>
 				</div>
