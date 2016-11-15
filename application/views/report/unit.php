@@ -127,6 +127,88 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
+					<div class="row">
+						<div class="col-md-12 col-sm-12">
+                            <!-- BEGIN PORTLET-->
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-share font-red-sunglo hide"></i>
+                                        <span class="caption-subject font-red-sunglo bold uppercase"><?php echo $this->lang->line('detailpub')?></span>
+                                    </div>
+                                </div>
+                                <div class='portlet-body'>
+					<div class="table-scrollable">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th >Kode</th>
+									<th >Fakultas</th>
+									<th ><?php echo $this->lang->line('penarikan_total'); ?></th>
+									<th ><?php echo $this->lang->line('penarikan_jurnal'); ?></th>
+									<th ><?php echo $this->lang->line('penarikan_seminar'); ?></th>
+									<th ><?php echo $this->lang->line('penarikan_unknown'); ?></th>
+									<th ><?php echo $this->lang->line('penarikan_lainnya'); ?></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<?php if(count($result) == 0): ?>
+								<tr>
+									<td colspan="3" class="text-center">Data Tidak Ditemukan</td>
+								</tr>
+								<?php endif; ?>
+								<?php 
+								$number = 1; 
+								$jumlah_all = 0;
+								$jumlah_jurnal = 0;
+								$jumlah_seminar = 0;
+								$jumlah_unknown = 0;
+								foreach ($newClassifier as $key => $value) { ?>
+								<tr>
+									<td><?php echo $number++; ?></td>
+									<td ><?php echo $value->kode ?></td>
+									<td ><?php echo $value->unit ?></td>
+									<td class="text-right" ><?php $jumlah_all += $value->jumlah; echo number_format($value->jumlah,0,',','.'); ?></td>
+									<td class="text-right" ><?php 
+										if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
+										$jumlah_jurnal += $result['jurnal'][$value->kode]; 
+										echo number_format($result['jurnal'][$value->kode],0,',','.');
+										?>
+									</td>
+									<td class="text-right" ><?php 
+										if(!isset($result['seminar'][$value->kode])) $result['seminar'][$value->kode] = 0;
+										$jumlah_seminar += $result['seminar'][$value->kode]; 
+										echo number_format($result['seminar'][$value->kode],0,',','.');
+										?>
+									</td>
+									<td class="text-right" ><?php 
+										if(!isset($result['unknown'][$value->kode])) $result['unknown'][$value->kode] = 0;
+										$jumlah_unknown += $result['unknown'][$value->kode]; 
+										echo number_format($result['unknown'][$value->kode],0,',','.');
+										?>
+									</td>
+									<td class="text-right" ><?php echo number_format($value->jumlah-($result['jurnal'][$value->kode] + $result['seminar'][$value->kode] + $result['unknown'][$value->kode]),0,',','.'); ?></td>
+								</tr>	
+								<?php } ?>
+								<tr>
+									<td colspan=3>Jumlah</td>
+									<td class="text-right" ><?php echo number_format($jumlah_all,0,',','.'); ?></td>
+									<td class="text-right" ><?php echo number_format($jumlah_jurnal,0,',','.'); ?></td>
+									<td class="text-right" ><?php echo number_format($jumlah_seminar,0,',','.'); ?></td>
+									<td class="text-right" ><?php echo number_format($jumlah_unknown,0,',','.'); ?></td>
+									<td class="text-right" ><?php echo number_format($jumlah_all-($jumlah_jurnal + $jumlah_seminar + $jumlah_unknown),0,',','.'); ?></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+                        </div>
 					</div>	
 				</div>
 			</div>

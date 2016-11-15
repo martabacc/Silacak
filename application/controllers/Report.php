@@ -172,6 +172,9 @@ class Report extends CI_Controller {
 	}
 
 	public function unit($fakultas = false, $tahun_mulai = -1, $tahun_selesai = -1, $is_download=false){
+
+		// error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 		//$this->auth->set_access('view');
 		$this->auth->validate(TRUE, TRUE);
 		$this->load->model('m_fakultas');
@@ -199,8 +202,52 @@ class Report extends CI_Controller {
         $result['unknown'][] = array();
 
         $data['all'] = $this->m_publikasi_dosen->report_by_unit($fakultas, false, $tahun_mulai,$tahun_selesai);
-		$data['result_jurnal'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_JURNAL,$tahun_mulai,$tahun_selesai);
-		$data['result_seminar'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_SEMINAR,$tahun_mulai,$tahun_selesai);
+        foreach([JIT,JITT,JNT,JNTT] as $key=>$value){
+        	$temp = $this->m_publikasi_dosen->report_by_unit($fakultas, $value ,$tahun_mulai,$tahun_selesai);	
+
+        	if($key == 0){
+        		$data['result_jurnal'] = $temp;
+        	}
+        	else{
+        		foreach($temp as $key2=>$x){
+        			$data['result_jurnal'][$key2]->jumlah +=  $x->jumlah;
+        		}
+        	}
+        }
+
+        $arrayOfNewClassifier = [
+        		SIT => 'SIT',
+        		JIT => 'JIT',
+        		SITT => 'SITT',
+        		JITT => 'JITT',
+        		JNT => 'JNT',
+        		JNTT => 'JNTT',
+        		SNL => 'SNL',
+        		L => 'Lainnya'
+        	];
+        $data['newClassifier'] = [];
+
+        foreach($arrayOfNewClassifier as $key=>$ac){
+        	$data['newClassifier'][$ac] = $this->m_publikasi_dosen->report_by_unit($fakultas, $key ,$tahun_mulai,$tahun_selesai);
+        }
+
+
+        //kenapa SNL duluan? Karena kalau SIT duluan, datanya jadi 0, error, ngga ada :(
+        foreach([SNL,SITT, SIT] as $key=>$value){
+        	$temp = $this->m_publikasi_dosen->report_by_unit($fakultas, $value ,$tahun_mulai,$tahun_selesai);	
+
+        	if($key == 0){
+        		$data['result_seminar'] = $temp;
+        	}
+        	else{
+        		foreach($temp as $key2=>$x){
+        			$data['result_seminar'][$key2]->jumlah +=  $x->jumlah;	
+        		}
+        	}
+        }
+		
+		// $data['result_seminar'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_SEMINAR,$tahun_mulai,$tahun_selesai);
+
 		$data['result_unknown'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_UNKNOWN,$tahun_mulai,$tahun_selesai);
 
 		foreach ($data['all'] as $value) {
