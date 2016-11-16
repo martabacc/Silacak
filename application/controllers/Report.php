@@ -173,7 +173,7 @@ class Report extends CI_Controller {
 
 	public function unit($fakultas = false, $tahun_mulai = -1, $tahun_selesai = -1, $is_download=false){
 
-		// error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 		//$this->auth->set_access('view');
 		$this->auth->validate(TRUE, TRUE);
@@ -216,8 +216,8 @@ class Report extends CI_Controller {
         }
 
         $arrayOfNewClassifier = [
-        		SIT => 'SIT',
         		JIT => 'JIT',
+        		SIT => 'SIT',
         		SITT => 'SITT',
         		JITT => 'JITT',
         		JNT => 'JNT',
@@ -226,6 +226,7 @@ class Report extends CI_Controller {
         		L => 'Lainnya'
         	];
         $data['newClassifier'] = [];
+        $data['classifier'] = $arrayOfNewClassifier;
 
         foreach($arrayOfNewClassifier as $key=>$ac){
         	$data['newClassifier'][$ac] = $this->m_publikasi_dosen->report_by_unit($fakultas, $key ,$tahun_mulai,$tahun_selesai);

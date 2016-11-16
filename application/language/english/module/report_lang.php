@@ -23,10 +23,4 @@ $lang['report_pub_type'] = 'Tipe Publikasi';
 
 // added here
 $lang['detailpub'] = 'Detail Penarikan Publikasi';
-$lang['penarikan_jit'] = 'Jumlah Data <br>JIT';
-$lang['penarikan_jitt'] = 'Jumlah Data <br>JITT';
-$lang['penarikan_sit'] = 'Jumlah Data <br>SIT';
-$lang['penarikan_sitt'] = 'Jumlah Data <br>SITT';
-$lang['penarikan_jnt'] = 'Jumlah Data <br>JNT';
-$lang['penarikan_jntt'] = 'Jumlah Data <br>JNTT';
-$lang['penarikan_snl'] = 'Jumlah Data <br>SNL';
+$lang['penarikan_prefix'] = 'Jumlah Data <br>';

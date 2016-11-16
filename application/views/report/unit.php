@@ -146,11 +146,12 @@
 									<th>No</th>
 									<th >Kode</th>
 									<th >Fakultas</th>
-									<th ><?php echo $this->lang->line('penarikan_total'); ?></th>
-									<th ><?php echo $this->lang->line('penarikan_jurnal'); ?></th>
-									<th ><?php echo $this->lang->line('penarikan_seminar'); ?></th>
-									<th ><?php echo $this->lang->line('penarikan_unknown'); ?></th>
-									<th ><?php echo $this->lang->line('penarikan_lainnya'); ?></th>
+									<?php foreach ($newClassifier as $key => $value ){ ?>
+										<th >
+										<?php echo $this->lang->line('penarikan_prefix') . $key; ?>
+										</th>	
+									<?php } ?>
+									<th >Jumlah</th>	
 								</tr>
 							</thead>
 							<tbody>
@@ -166,41 +167,50 @@
 								$jumlah_jurnal = 0;
 								$jumlah_seminar = 0;
 								$jumlah_unknown = 0;
-								foreach ($newClassifier as $key => $value) { ?>
+								foreach ($classifier as $key => $val) { 
+									$value = $newClassifier[val];
+									echo json_encode($value);
+									die();
+									$value = $newClassifier[$key];
+									if(sizeof($value) == 0) $flag = false;
+									else $flag = true;
+									?>
 								<tr>
 									<td><?php echo $number++; ?></td>
-									<td ><?php echo $value->kode ?></td>
-									<td ><?php echo $value->unit ?></td>
-									<td class="text-right" ><?php $jumlah_all += $value->jumlah; echo number_format($value->jumlah,0,',','.'); ?></td>
-									<td class="text-right" ><?php 
-										if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
-										$jumlah_jurnal += $result['jurnal'][$value->kode]; 
-										echo number_format($result['jurnal'][$value->kode],0,',','.');
+									<td ><?php if($flag) echo $value->kode ?></td>
+									<td ><?php if($flag) echo $value->unit ?></td>
+									<?php foreach($value as $k2 => $v){ ?>
+
+										<td class="text-right" >
+										<?php
+											if($flag){
+												// $jumlah_all += $value->jumlah; 
+												echo number_format($value->jumlah,0,',','.'); 
+
+											}
+											// if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
+											// $jumlah_jurnal += $result['jurnal'][$value->kode]; 
+											// echo number_format($result['jurnal'][$value->kode],0,',','.');
 										?>
-									</td>
-									<td class="text-right" ><?php 
-										if(!isset($result['seminar'][$value->kode])) $result['seminar'][$value->kode] = 0;
-										$jumlah_seminar += $result['seminar'][$value->kode]; 
-										echo number_format($result['seminar'][$value->kode],0,',','.');
-										?>
-									</td>
-									<td class="text-right" ><?php 
-										if(!isset($result['unknown'][$value->kode])) $result['unknown'][$value->kode] = 0;
-										$jumlah_unknown += $result['unknown'][$value->kode]; 
-										echo number_format($result['unknown'][$value->kode],0,',','.');
-										?>
-									</td>
-									<td class="text-right" ><?php echo number_format($value->jumlah-($result['jurnal'][$value->kode] + $result['seminar'][$value->kode] + $result['unknown'][$value->kode]),0,',','.'); ?></td>
+										</td>
+
+									<?php } ?>
+
 								</tr>	
-								<?php } ?>
-								<tr>
+								<?php  } 
+
+								// echo json_encode($newClassifier);
+								// die();
+
+								?>
+								<!-- <tr>
 									<td colspan=3>Jumlah</td>
 									<td class="text-right" ><?php echo number_format($jumlah_all,0,',','.'); ?></td>
 									<td class="text-right" ><?php echo number_format($jumlah_jurnal,0,',','.'); ?></td>
 									<td class="text-right" ><?php echo number_format($jumlah_seminar,0,',','.'); ?></td>
 									<td class="text-right" ><?php echo number_format($jumlah_unknown,0,',','.'); ?></td>
 									<td class="text-right" ><?php echo number_format($jumlah_all-($jumlah_jurnal + $jumlah_seminar + $jumlah_unknown),0,',','.'); ?></td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>
