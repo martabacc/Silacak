@@ -3,12 +3,20 @@
 	<div class="col-md-12">
 		<div id="master-page">
 			<div class="detail-page portlet light bg-inverse form-fit" >
+				<div id="success-alert" class="alert alert-success" style="display:none;">
+                    <button class="close" data-close="alert"></button>
+                    <div class="alert-wrapper">
+                    	<strong class="alert-title">Sukses!</strong> 
+                    	<span class="alert-content">Data berhasil ditambahkan</span></div>
+                </div>
+                <div class='clearfix'></div>
+
 				<div class="portlet-title">
 					<div class="caption">
 						<i class="fa fa-user font-green-seagreen"></i>
 						<span class="caption-subject bold font-green-seagreen uppercase">
 							<!-- TODO LANG -->
-							Tambah Data Scopus
+							Tambah Data ISSN
 						</span>
 					</div>
 					<div class="actions"></div>

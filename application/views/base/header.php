@@ -36,7 +36,7 @@
     <?php echo $this->asset_library->get_header_js(); ?>
 </head>
 <body class="page-header-fixed page-sidebar-fixed page-footer-fixed <?php echo $this->asset_library->get_body_class(); ?>">
-    <div class="page-header navbar navbar-fixed-top">
+    <div class="page-header navbar navbar-fixed-top" style="z-index:999!important;">
         <div class="page-header-inner">
             <div class="page-logo">
                 <a href="<?php echo base_url(); ?>">
@@ -56,6 +56,11 @@
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a href="<?php echo base_url(); ?>notification">
+                                    <i class="fa fa-info"></i> Informasi Perubahan
+                                </a>
+                            </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>login/logout">
                                     <i class="fa fa-sign-out"></i> Log Out
@@ -184,18 +189,6 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>report/jurnal" class="nav-link " module="report_jurnal">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Laporan Data Jurnal</span>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>report/seminar" class="nav-link " module="report_seminar">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Laporan Data Seminar</span>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
                                 <a href="<?php echo base_url(); ?>report/tahun_publikasi" class="nav-link " module="tahun_publikasi">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Laporan Publikasi</span>
@@ -214,30 +207,29 @@
                                     <span class="title">Laporan Unit</span>
                                 </a>
                             </li>
-							
+                            <!-- <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>report/jurnal" class="nav-link " module="report_jurnal">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan Data Jurnal</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>report/seminar" class="nav-link " module="report_seminar">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan Data Seminar</span>
+                                </a>
+                            </li> -->
 
-                        </ul>
-                    </li>
-
-                    <!-- added here -->
-
-                                        <li class="nav-item ">
-                        <a href="javascript:;" class="nav-link nav-toggle" module="dev">
-                            <i class="icon-bar-chart"></i>
-                            <span class="title">Laporan Dev</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <ul class="sub-menu">
                             <li class="nav-item ">
                                 <a href="<?php echo base_url(); ?>dev/seminar" class="nav-link " module="all_sem">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">Seminar</span>
+                                    <span class="title">Laporan Semua Seminar</span>
                                 </a>
                             </li>
                             <li class="nav-item ">
                                 <a href="<?php echo base_url(); ?>dev/jurnal" class="nav-link " module="all_jur">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">Jurnal</span>
+                                    <span class="title">Laporan Semua Jurnal</span>
                                 </a>
                             </li>
                             <li class="nav-item ">
@@ -288,28 +280,47 @@
                                     <span class="title">Lainnya</span>
                                 </a>
                             </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="javascript:;" class="nav-link nav-toggle" module="klasifikasi">
+                            <i class="icon-bar-chart"></i>
+                            <span class="title">Klasifikasi Data</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
                             <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>dev/issn" class="nav-link " module="manage_issn">
+                                <a href="<?php echo base_url(); ?>issn" class="nav-link " module="manage_issn">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Data ISSN</span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>dev/scopus" class="nav-link " module="upload_scopus">
+                                <a href="<?php echo base_url(); ?>issn/klasifikasiissn" class="nav-link " module="klas_issn">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">File Scopus</span>
+                                    <span class="title">Klasifikasi ISSN</span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>dev/klasifikasiscopus" class="nav-link " module="klas_scopus">
+                                <a href="<?php echo base_url(); ?>scopus" class="nav-link " module="upload_scopus">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Data Scopus</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>scopus/klasifikasiscopus" class="nav-link " module="klas_scopus">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Klasifikasi Scopus</span>
                                 </a>
                             </li>
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>dev/debug" class="nav-link " module="report_unit">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Debug</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
-
                     <li class="nav-item ">
                         <a href="<?php echo base_url(); ?>setting" module="setting">
                             <i class="icon-settings"></i>

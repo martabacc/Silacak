@@ -707,6 +707,7 @@ function concat_message(first_message, second_message, delimiter){
         };
 
         base.showMessage = function(title, message, is_error){
+            console.log('is error' + is_error);
             if(typeof(is_error) == 'undefined')
                 is_error = true;
 

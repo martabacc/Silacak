@@ -23,8 +23,20 @@
             dataPenarikan[i].data.push(newData);
         }
     }
-
 </script>
+
+<style>
+[data-notify="progressbar"] {
+	margin-bottom: 100px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+    margin-top:100px!important;
+    z-index:99999;
+	width: 100%;
+	height: 5px;
+}
+</style>
 <div class="row">
 	<div class="col-md-12">
         <div class="row margin-bottom-25">

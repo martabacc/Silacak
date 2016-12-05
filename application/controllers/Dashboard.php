@@ -29,6 +29,8 @@ class Dashboard extends CI_Controller {
 		}else{
 			//$dashboard = $login_user->usg_name; contoh
 			$dashboard = 'root'; //samakan saja biar gampang
+			
+			//kalau sama redirectnya kenapa di if -_-"
 		}
 
 		redirect("dashboard/$dashboard");
@@ -55,6 +57,8 @@ class Dashboard extends CI_Controller {
 		$this->asset_library->add_js('plugins/flot/jquery.flot.categories.min.js');
 		$this->asset_library->add_js('plugins/flot/jquery.flot.axislabels.js');
 		$this->asset_library->add_js('js/pages/dashboard.js');
+		$this->asset_library->add_js('js/bootstrap-notify.min.js');
+		$this->asset_library->add_js('js/dashboard-notif.js');
 
 		$data = array();
 

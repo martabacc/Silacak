@@ -6,10 +6,14 @@ $(document).ready(function(){
 			url : 'add_data',
 			data: { issn_judul :  $('#issn_judul').val() , csrf_token : $('#tkn').val() },
 			success : function(e){
-				console.log(e);
+				$('#success-alert').show();
+				setTimeout(function(){
+					$('#success-alert').hide();
+				}, 3000);
+				$('#issn_judul').val('');
 			},
 			error: function(exception){
-				console.log(exception);
+				console.log('error');
 			}
 		});
 	});

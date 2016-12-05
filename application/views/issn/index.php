@@ -23,7 +23,7 @@
 						</div>
 						<div class="portlet-body">
 							<div class="masterpage-filter form-inline" >
-								<a href="<?php echo base_url()?>issn/add_data" id="btn-download" class="btn green-seagreen margin-top-10">Data ISSN</a>
+								<a href="<?php echo base_url()?>issn/add_data" id="btn-download" class="btn green-seagreen margin-top-10">Tambah Data ISSN</a>
 							</div>
 							<form method="post" action="javascript:void(null);" class="form-master">
 								<table class="table-master table table-striped table-bordered table-hover">

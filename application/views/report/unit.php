@@ -169,8 +169,8 @@
 								$jumlah_unknown = 0;
 								foreach ($classifier as $key => $val) { 
 									$value = $newClassifier[val];
-									echo json_encode($value);
-									die();
+									// echo json_encode($value);
+									// die();
 									$value = $newClassifier[$key];
 									if(sizeof($value) == 0) $flag = false;
 									else $flag = true;

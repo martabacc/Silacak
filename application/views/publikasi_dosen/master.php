@@ -74,6 +74,10 @@ ol.ol-anggota li.placeholder:before {
 							<input type='hidden' name='jname' value='<?php echo $jname?>'>
 						<?php }
 						?>
+						<?php if(isset($kode)){ ?>
+							<input type='hidden' name='kode' value='<?php echo $kode?>'>
+						<?php }
+						?>
 						<div class="filter-part col-md-5">
 							<div class="row">
 								<div class="form-group">

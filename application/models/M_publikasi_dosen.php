@@ -492,6 +492,36 @@ class M_publikasi_dosen extends MY_Model {
 		return $query->result();
 	}
 
+	public function list_jurnal($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0, $pub_keterangan) {
+
+		$this->db->select("*", FALSE);
+
+		$this->db->from('anggota');
+        $this->db->join('pegawai', 'ang_pegawai = peg_id', 'left');
+        $this->db->join('publikasi_dosen', 'ang_publikasi = pub_id', 'left');
+        $this->db->join('jurusan', 'peg_jurusan = jur_id', 'left');
+        $this->db->join('fakultas', 'peg_fakultas = fak_id', 'left');
+        $this->db->join('detil_kode_publikasi', 'pub_detilkodepub = dkp_id', 'left');
+
+        $this->db->where('pub_keterangan IS NOT NULL');
+        $this->db->where('pub_keterangan = "'.$pub_keterangan.'"');
+        $this->db->where('pub_detilkodepub = ' . $kode);
+        $this->db->where('pub_status_tarik = 1');
+        if ($fakultas != 0) {
+        	$this->db->where('peg_fakultas = ' . $fakultas);
+        }
+        if ($jurusan != 0) {
+        	$this->db->where('peg_jurusan = ' . $jurusan);
+        }
+        if ($tahun != 0) {
+        	$this->db->where('YEAR(pub_created_at) = ' . $tahun);
+        }
+
+        $this->db->order_by("pub_judul asc");
+
+		return $query->result();
+	}
+
 	public function update_status($pub_id = 0, $status = 0){
 		$data = array();
         if($status !== FALSE)$data['pub_status_tarik'] = ($status == 0 ? 0 : $status);

@@ -7,6 +7,7 @@ $(document).ready(function(){
 		addUrl: base_url + 'issn/add_data',
 		editUrl: base_url + 'issn/edit',
 		deleteUrl: base_url + 'issn/delete',
+		access: {add: false, edit: false, delete: true, refresh: true},
 		cols: [
 				/* jur_id - 0*/
 				{
@@ -23,6 +24,9 @@ $(document).ready(function(){
 		orders: [[0, 'desc']],
 		validation: {
 			issn_title: {maxlength: 255}
+		},
+		afterDeleteCallback: function(e){
+			console.log(e);
 		}
 	});
 });

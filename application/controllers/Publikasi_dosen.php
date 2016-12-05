@@ -830,7 +830,8 @@ class Publikasi_dosen extends CI_Controller {
 		//$this->auth->set_access('view');
 		//$this->auth->validate();
 
-		$filter_cols = array('pub_detilkodepub' => /*uintval(*/$this->input->post('pub_detilkodepub'),  'pub_status_tarik' => $this->input->post('pub_status_tarik')/*, TRUE)*/);
+		$filter_cols = array('pub_detilkodepub' => /*uintval(*/$this->input->get('pub_detilkodepub'),  
+							 'pub_status_tarik' => $this->input->post('pub_status_tarik'));
 		
 		$add_where = '';
 		//set default where query
@@ -844,7 +845,7 @@ class Publikasi_dosen extends CI_Controller {
 		if ($this->input->get('jname') != "")
 		{
 			if ($add_where != '') $add_where .= ' AND ';
-			$add_where .= 'pub_keterangan like "%' . $this->input->get('jname') .'%"';
+			$add_where .= 'pub_keterangan like "' . $this->input->get('jname') .'"';
 		}
 
 		if ($this->input->post('pub_pegawai') != '')
@@ -861,14 +862,24 @@ class Publikasi_dosen extends CI_Controller {
 			
 		$where = build_masterpage_filter($filter_cols, $add_where);
 
-		//get data
 		$this->m_publikasi_dosen->get_datatable($unfiltered, $where);
 	}
-	
-	public function listpub(){
-		$this->auth->validate(TRUE, TRUE);
 
+	public function get2(){
+		//  $fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0, $pub_keterangan
+		$fakultas = 0; $jurusan = 0; $tahun = 0;
+
+		$kode= $this->input->get('pub_detilkodepub');
+		$pub_keterangan= $this->input->get('jname');
+		$data = $this->m_publikasi_dosen->list_jurnal($fakultas, $jurusan, $tahun, $kode, $pub_keterangan);
+
+		echo json_encode($data);
+	}
+	
+	public function listpub($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0){
+		$this->auth->validate(TRUE, TRUE);
 		$journalName = $this->input->post('journalName') ;
+		$kode = $this->input->post('kode') ;
 
 		//set informasi halaman
 		$this->site_info->set_page_title('Detail Publikasi : ' . $journalName);
@@ -877,8 +888,7 @@ class Publikasi_dosen extends CI_Controller {
 		$this->site_info->add_breadcrumb('Laporan');
 		$this->site_info->add_breadcrumb('Detail Publikasi');
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
-		$this->site_info->set_current_submodule('report_jit');
+		$this->site_info->set_current_module('report');
 
 		//add masterpage script
 		$this->asset_library->add_masterpage_script();
@@ -906,7 +916,8 @@ class Publikasi_dosen extends CI_Controller {
 		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('', 'dkp_keterangan asc');
 		$data["pegawai"] = $pegawai;
 		$data["pegawai_name"] = $pegawai_name;
-		$data["jname"] = $this->input->post('journalName');
+		$data["jname"] = $journalName;
+		$data["kode"] = $kode;
 		$data["status_tarik"] = $status_tarik;
 		//load view
 		$this->load->view('base/header');

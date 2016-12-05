@@ -109,30 +109,13 @@ $(document).ready(function(){
         orientation: "left",
         autoclose: true
     });
-  //   var group = $("ol.ol-anggota").sortable({
-  //   	group: 'ol-dosen',
-  // 		handle: 'i.fa-arrows',
-  // 		onDrop: function ($item, container, _super) {
-  // 			var data = group.sortable("serialize").get();
 
-		//     var jsonString = JSON.stringify(data, null, ' ');
-
-		//     console.log(jsonString);
-		//     _super($item, container);
-		//   },
-		// serialize: function (parent, children, isContainer) {
-		// 	var row = parent.attr("id");
-		// 	row = row.substr(3);
-		// 	console.log($("#ang_pegawai_"+row).val()+"");
-		// 	return isContainer ? children.join() : $("#ang_pegawai_"+row).val()+"";
-		//     // return isContainer ? children.join() : parent.text();
-		//   },
-  //   });
   	console.log($('input[name="jname"]').val());
 	$('#master-page').masterPage({
 		primaryKey: 'pub_id',
 		detailFocusId: 'pub_id',
-		dataUrl: base_url + 'publikasi_dosen/getdatamaster_listpub?jname=' + $('input[name="jname"]').val(),
+		dataUrl: base_url + 'publikasi_dosen/get2?jname=' + $('input[name="jname"]').val()
+				 + '&kode=' + $('input[name="kode"]').val(),
 		detailUrl: base_url + 'publikasi_dosen/detail',
 		addUrl: base_url + 'publikasi_dosen/add',
 		editUrl: base_url + 'publikasi_dosen/edit',

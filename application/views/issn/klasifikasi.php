@@ -15,40 +15,15 @@
 				</div>
 				<div class="portlet-body form">
 					<form action="javascript:void(0);" method="post" class="form-detail form-horizontal form-bordered form-label-stripped">
-
                         <div class="alert alert-info">
-                            <strong>Informasi : </strong> Klik tombol dibawah untuk me-refresh / mengklasifikasikan /mencocokkan data publikasi di database dengan data di file Scopus yang telah diupload di halaman <a href="<?php echo base_url('scopus');?>">Data Scopus</a>
-							<br>
-
+                            <strong>Informasi : </strong> Klik tombol dibawah untuk me-refresh / mengklasifikasikan / mencocokkan data di database dengan data Jurnal ISSN yang telah dimasukkan di halaman <a href="<?php echo base_url('issn');?>">Data Issn</a>
                         </div>
-						<div class="form-body">
-							<div class="form-group">
-								<label class="control-label col-md-3">
-									<!-- todo lang -->
-									Klasifikasi File Scopus
-								</label>
-								<div class="col-md-9 input-placement" >
-									<div class="input-group input-large">
-										<select id="filename" name="filename"class="form-control" required >
-											<?php foreach($result as $r){
-												if( $r!= '.' && $r != '..'){	
-												?>
-												<option value='<?php echo $r?>'><?php echo $r?> </option>
-											<?php } } ?>
-										</select>
-										<p class="info">File yang dipilih akan dicocokkan dengan data di dalam database</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-							
 						<div class="form-actions">
 							<div class="row">
 								<div class="col-md-offset-3 col-md-9">
 									<div class="detail-control">
 										<button id="btn-save" type="button" class="btn green-seagreen mp-save-button">
-											<i class="fa fa-refresh"></i> <span>Klasifikasi</span>
+											<i class="fa fa-refresh"></i> <span>Klasifikasi Jurnal ISSN</span>
 										</button>
 									</div>
 								</div>

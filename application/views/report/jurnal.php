@@ -37,6 +37,7 @@
 								<input type="hidden" id="filter_keterangan" value="<?php echo $kode; ?>" />
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>" />
 								<input type="hidden" name="journalName" id='journalName'>
+								<input type="hidden" name="kode" id='kode'>
 								<input type='submit' id='hiddenSubmit' style='display:none'>
 								</form>
 								<div class="filter-part col-md-5">
@@ -59,7 +60,7 @@
 								<div class="clearfix"></div>
 								<div class="filter-part col-md-5">
 									<div class="form-group">
-										<label class="control-label col-md-4"><?php echo $this->lang->line('jurnal_jenis');?></label>
+										<label class="control-label col-md-4">Jenis Publikasi</label>
 										<div class="col-md-8 input-placement">
 											<?php make_object_combobox($detil_kode_publikasi, 'dkp_id', 'dkp_keterangan', array('id'=>'filter_keterangan', 'class'=>'form-control input-medium'), TRUE, TRUE, 'master_all'); ?>
 										</div>
