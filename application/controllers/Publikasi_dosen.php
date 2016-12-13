@@ -588,6 +588,31 @@ class Publikasi_dosen extends CI_Controller {
 		}	
 	}
 
+	public function findFromAPI(/*$publicationName*/){
+		$title = $this->input->get('title');
+		$title = urlencode($title);
+		$apiKey = '917c7c3bf5227f960f04ebfc136d895c';
+		$url = 'http://api.elsevier.com/content/serial/title?apiKey='.$apiKey.'&&title='.$title;
+
+		$aContext = array(
+		    'http' => array(
+		        'proxy' => 'tcp://192.168.0.2:3128',
+		        'request_fulluri' => true,
+		    ),
+		);
+		$cxContext = stream_context_create($aContext);
+		// proxy settings
+
+		// get info about the request
+		$result = file_get_contents($url);
+		// $sFile = file_get_contents("http://www.google.com", False, $cxContext);
+
+		$result = json_decode($result, true);
+		// var_dump($result["serial-metadata-response"]);
+		return isset($result["serial-metadata-response"]["error"]) ? false : true;
+
+	}
+
 	public function pull_awal($peg){
 		$url_front = "http://scholar.google.co.id/citations?hl=en&oe=ASCII&user=";
 		$url_scholar = $peg->peg_google_schoolar;
@@ -630,8 +655,18 @@ class Publikasi_dosen extends CI_Controller {
 
 						$exist_pub = $this->m_publikasi_dosen->get("pub_judul like '".$title."'");
 						$dkp_id = false;
+
+
+						/* classification start here*/
+
+						$flag = false;
+						
+						if($this->findFromAPI($title))		
+
 						if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false || preg_match("/([0-9]-[0-9])/", $desc)) $dkp_id = KODE_JURNAL;
-						else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $dkp_id = KODE_SEMINAR;
+						else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $dkp_id = KODE_SEMINAR;						
+
+						/* classification ends here*/
 
 						if(count($exist_pub)>0){
 							$pub_id = $exist_pub[0]->pub_id;
@@ -820,17 +855,7 @@ class Publikasi_dosen extends CI_Controller {
 
 	public function getdatamaster_listpub(){
 
-		// $result = $this->m_publikasi_dosen->get_by_column($journalName, 'pub_keterangan',9999);
-
-		// echo json_encode($result);
-
-				//only ajax is allowed
-		if(!$this->input->is_ajax_request()) show_404();
-
-		//$this->auth->set_access('view');
-		//$this->auth->validate();
-
-		$filter_cols = array('pub_detilkodepub' => /*uintval(*/$this->input->get('pub_detilkodepub'),  
+		$filter_cols = array('pub_detilkodepub' => /*uintval(*/$this->input->get('kode'),  
 							 'pub_status_tarik' => $this->input->post('pub_status_tarik'));
 		
 		$add_where = '';
@@ -845,7 +870,7 @@ class Publikasi_dosen extends CI_Controller {
 		if ($this->input->get('jname') != "")
 		{
 			if ($add_where != '') $add_where .= ' AND ';
-			$add_where .= 'pub_keterangan like "' . $this->input->get('jname') .'"';
+			$add_where .= "pub_keterangan like '%" . $this->input->get('jname') ."%'";
 		}
 
 		if ($this->input->post('pub_pegawai') != '')
@@ -863,17 +888,6 @@ class Publikasi_dosen extends CI_Controller {
 		$where = build_masterpage_filter($filter_cols, $add_where);
 
 		$this->m_publikasi_dosen->get_datatable($unfiltered, $where);
-	}
-
-	public function get2(){
-		//  $fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0, $pub_keterangan
-		$fakultas = 0; $jurusan = 0; $tahun = 0;
-
-		$kode= $this->input->get('pub_detilkodepub');
-		$pub_keterangan= $this->input->get('jname');
-		$data = $this->m_publikasi_dosen->list_jurnal($fakultas, $jurusan, $tahun, $kode, $pub_keterangan);
-
-		echo json_encode($data);
 	}
 	
 	public function listpub($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0){

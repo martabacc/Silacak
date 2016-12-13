@@ -3,7 +3,7 @@ $(document).ready(function(){
         // options
         icon: 'glyphicon glyphicon-info-sign',
         title: 'Pemberitahuan : Perubahan yang ada',
-        message: '<br>Sedang dalam proses perbaikan.',
+        message: '<br>',
         url: 'http://10.199.14.13/silacak/notification',
     },{
         // settings

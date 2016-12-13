@@ -22,7 +22,7 @@
 							<div class="row">
 								<div class="col-md-offset-3 col-md-9">
 									<div class="detail-control">
-										<button id="btn-save" type="button" class="btn green-seagreen mp-save-button">
+										<button id="btn-save" type="submit" class="btn green-seagreen mp-save-button">
 											<i class="fa fa-refresh"></i> <span>Klasifikasi Jurnal ISSN</span>
 										</button>
 									</div>

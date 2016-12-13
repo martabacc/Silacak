@@ -492,9 +492,10 @@ class M_publikasi_dosen extends MY_Model {
 		return $query->result();
 	}
 
-	public function list_jurnal($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = 0, $pub_keterangan) {
+	public function list_jurnal($fakultas = 0, $jurusan = 0, $minYear = 0, $maxYear = 0, $kode = 0, $pub_keterangan) {
 
-		$this->db->select("*", FALSE);
+		$this->db->select("publikasi_dosen.*", FALSE);
+		// $this->db->select("COUNT(pub_judul) as jumlah", FALSE);
 
 		$this->db->from('anggota');
         $this->db->join('pegawai', 'ang_pegawai = peg_id', 'left');
@@ -503,8 +504,7 @@ class M_publikasi_dosen extends MY_Model {
         $this->db->join('fakultas', 'peg_fakultas = fak_id', 'left');
         $this->db->join('detil_kode_publikasi', 'pub_detilkodepub = dkp_id', 'left');
 
-        $this->db->where('pub_keterangan IS NOT NULL');
-        $this->db->where('pub_keterangan = "'.$pub_keterangan.'"');
+        $this->db->where("pub_keterangan ='".$pub_keterangan."'");
         $this->db->where('pub_detilkodepub = ' . $kode);
         $this->db->where('pub_status_tarik = 1');
         if ($fakultas != 0) {
@@ -513,13 +513,18 @@ class M_publikasi_dosen extends MY_Model {
         if ($jurusan != 0) {
         	$this->db->where('peg_jurusan = ' . $jurusan);
         }
-        if ($tahun != 0) {
-        	$this->db->where('YEAR(pub_created_at) = ' . $tahun);
+        if ($minYear != 0) {
+        	$this->db->where('YEAR(pub_created_at) >= ' . $minYear);
+        }
+        if ($maxYear != 0) {
+        	$this->db->where('YEAR(pub_created_at) <= ' . $maxYear);
         }
 
+        // $this->db->group_by("pub_keterangan");
         $this->db->order_by("pub_judul asc");
 
-		return $query->result();
+        $query = $this->db->get();
+		return json_encode($query->result());
 	}
 
 	public function update_status($pub_id = 0, $status = 0){

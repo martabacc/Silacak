@@ -37,7 +37,7 @@
 								<input type="hidden" id="filter_keterangan" value="<?php echo $kode; ?>" />
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>" />
 								<input type="hidden" name="journalName" id='journalName'>
-								<input type="hidden" name="kode" id='kode'>
+								<input type="hidden" name="kode" id='kode' value='<?php echo $kode; ?>'>
 								<input type='submit' id='hiddenSubmit' style='display:none'>
 								</form>
 								<div class="filter-part col-md-5">

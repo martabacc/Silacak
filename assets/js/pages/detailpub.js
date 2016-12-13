@@ -111,10 +111,11 @@ $(document).ready(function(){
     });
 
   	console.log($('input[name="jname"]').val());
+  	console.log($('input[name="kode"]').val());
 	$('#master-page').masterPage({
 		primaryKey: 'pub_id',
 		detailFocusId: 'pub_id',
-		dataUrl: base_url + 'publikasi_dosen/get2?jname=' + $('input[name="jname"]').val()
+		dataUrl: base_url + 'publikasi_dosen/getdatamaster_listpub?jname=' + $('input[name="jname"]').val()
 				 + '&kode=' + $('input[name="kode"]').val(),
 		detailUrl: base_url + 'publikasi_dosen/detail',
 		addUrl: base_url + 'publikasi_dosen/add',

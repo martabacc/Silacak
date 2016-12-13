@@ -426,7 +426,14 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection'] = TRUE;
+
+if (stripos($_SERVER["REQUEST_URI"],'publikasi_dosen/findFromApi') === FALSE && stripos($_SERVER["REQUEST_URI"],'publikasi_dosen/get2') === FALSE ) {
+	$config['csrf_protection'] 	= TRUE;
+}else{ 
+	$config['csrf_protection'] 	= FALSE; 
+}
+
+// $config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'csrf_token'; //samakan ini agar ga usah ngedit library karena ga ada getternya
 $config['csrf_cookie_name'] = 'csrf_token';
 $config['csrf_expire'] = 7200;
