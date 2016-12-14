@@ -207,6 +207,13 @@
                                     <span class="title">Laporan Unit</span>
                                 </a>
                             </li>
+                            
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url(); ?>report/personal" class="nav-link " module="report_personal">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Laporan Personal</span>
+                                </a>
+                            </li>
                             <!-- <li class="nav-item ">
                                 <a href="<?php echo base_url(); ?>report/jurnal" class="nav-link " module="report_jurnal">
                                     <i class="icon-bar-chart"></i>
