@@ -106,8 +106,8 @@ $(document).ready(function(){
                 	$('#resultTable').html('');
 
                 	result = resp;
-                	console.log(resp);
                 	if(result.length!=0){
+                		$('.ikanteri').css("display", "block");
 	                	$.each(result, function(i, item){        		
 					        var $tr = $('<tr>').append(
 					            $('<td>').text(item.dkp_keterangan),
@@ -115,19 +115,17 @@ $(document).ready(function(){
 					        ).appendTo('#resultTable');
 	                	});
 	                }
-	                else{
-	                	console.log('error');
-	                	var $tr = $('<tr>')
-	                	.text('Tidak ada data ditemukan!')
-					    .appendTo('#resultTable');
+	                else{  		
+                		$('.ikanteri').css("display", "none");
+					    show_alert("Tidak ditemukan", "Tidak ada data publikasi ditemukan", true);	
 
 	                }
                     WebTemplate.unblockUI("#master-page");
                 },
                 error: function(resp){
                 	console.log( 'error' + JSON.stringify(resp));
-	        		// show_alert(mp_lang['error'], "Terjadi kesalahan pada jaringan. Mohon hubungi admin.", true);	
-                	// WebTemplate.unblockUI("#master-page");
+	        		show_alert(mp_lang['info'], "<br> Terjadi kesalahan pada jaringan. Mohon hubungi admin.", true);	
+                	WebTemplate.unblockUI("#master-page");
                 }
             });
 		}

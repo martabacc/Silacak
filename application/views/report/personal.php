@@ -48,28 +48,25 @@
 							</div>
 						</div>
 					</form>
-
-					<div class="table-scrollable " style="display:show;">
-						<table class="table-master table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>
-									Jenis Publikasi
-								</th>
-								<th>
-									Jumlah
-								</th>
-							</tr>
-						</thead>
-						<tbody id='resultTable'>
-
-						</tbody>
-						</table>
+					<div class='col-md-12 ikanteri' style="display:none;">
+					
+						<div class="table-scrollable " >
+							<table class="table-master table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>
+										Jenis Publikasi
+									</th>
+									<th>
+										Jumlah
+									</th>
+								</tr>
+							</thead>
+							<tbody id='resultTable'></tbody>
+							</table>
+						</div>
 					</div>
-
-
 			</div>
-		</div>
 	</div>
 </div>
 

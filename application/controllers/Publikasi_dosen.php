@@ -497,6 +497,7 @@ class Publikasi_dosen extends CI_Controller {
 		}
 		
 		foreach ($pegs as $peg) {
+			echo 'success';
 			$url_scholar = $peg->peg_google_schoolar;
 			$url_scholar = explode("user=", $url_scholar);
 			$peg_id = $peg->peg_id;
@@ -536,11 +537,45 @@ class Publikasi_dosen extends CI_Controller {
 							else $validasi = 0;
 
 							$exist_pub = $this->m_publikasi_dosen->get("pub_judul like '".$title."'");
-							$dkp_id = false;
+							$dkp_id = 0;
 
-							if( $year !=NULL || $year != '' ) $dkp_id = KODE_UNKNOWN;
-							else if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false ) $dkp_id = KODE_JURNAL;
-							else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false) $dkp_id = KODE_SEMINAR;
+
+							/* classification start here*/
+
+							$flag = false;
+							$d = '';
+
+							if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false || preg_match("/([0-9]-[0-9])/", $desc)) $d = 'jurnal';
+							else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $d = 'seminar';
+
+							// klasifikasi terindeks
+							if($this->findFromAPI($title)){
+								if($d=='jurnal') $dkp_id = JIT;
+								else if($d=='seminar') $dkp_id= SIT;
+							}	
+
+							$allString = strtolower($title) . " " . strtolower($desc);
+	 
+							// klasifikasi internasional
+
+							if ( strpos($allString, 'international') !== false ) 
+							{
+							    if ( strpos($allString, 'seminar') !== false || strpos($allString, 'conference') !== false  ) 
+							    	$dkp_id = SITT;
+
+							    elseif ( strpos($allString, 'journal') !== false )
+							    {
+							    	$dkp_id = JITT;
+							    }
+							}
+							else if ( strpos($allString, 'nasional') !== false ) {
+							    if ( strpos($allString, 'seminar') !== false  )
+							    {
+							    	$dkp_id = SNL;
+							    }
+							}
+
+							if($dkp_id==0) $dkp_id = L;
 
 
 							if(count($exist_pub)>0){
@@ -596,7 +631,7 @@ class Publikasi_dosen extends CI_Controller {
 
 		$aContext = array(
 		    'http' => array(
-		        'proxy' => 'tcp://192.168.0.2:3128',
+		        'proxy' => 'tcp://10.151.34.16:3416',
 		        'request_fulluri' => true,
 		    ),
 		);
@@ -604,12 +639,14 @@ class Publikasi_dosen extends CI_Controller {
 		// proxy settings
 
 		// get info about the request
-		$result = file_get_contents($url);
-		// $sFile = file_get_contents("http://www.google.com", False, $cxContext);
+		// $result = file_get_contents($url);
+		$result = file_get_contents($url, False, $cxContext);
 
 		$result = json_decode($result, true);
 		// var_dump($result["serial-metadata-response"]);
 		return isset($result["serial-metadata-response"]["error"]) ? false : true;
+
+		// if return true, berarti publikasi internasional
 
 	}
 
@@ -654,17 +691,46 @@ class Publikasi_dosen extends CI_Controller {
 						else $validasi = 0;
 
 						$exist_pub = $this->m_publikasi_dosen->get("pub_judul like '".$title."'");
-						$dkp_id = false;
+						$dkp_id = 0;
 
 
 						/* classification start here*/
 
 						$flag = false;
-						
-						if($this->findFromAPI($title))		
+						$d = '';
 
-						if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false || preg_match("/([0-9]-[0-9])/", $desc)) $dkp_id = KODE_JURNAL;
-						else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $dkp_id = KODE_SEMINAR;						
+						if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false || preg_match("/([0-9]-[0-9])/", $desc)) $d = 'jurnal';
+						else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $d = 'seminar';
+
+						// klasifikasi terindeks
+						if($this->findFromAPI($title)){
+							if($d=='jurnal') $dkp_id = JIT;
+							elseif($d=='seminar') $dkp_id= SIT;
+						}	
+
+						$allString = strtolower($title) . " " . strtolower($desc);
+ 
+						// klasifikasi internasional
+
+						if ( strpos($allString, 'international') !== false ) {
+						    if ( strpos($allString, 'seminar') !== false || strpos($allString, 'conference') !== false ) 
+						    {
+						    	$dkp_id = SITT;
+						    }
+
+						    elseif ( strpos($allString, 'journal') !== false )
+						    {
+						    	$dkp_id = JITT;
+						    }
+						}
+						elseif ( strpos($allString, 'nasional') !== false ) {
+						    if ( strpos($allString, 'seminar') !== false  )
+						    {
+						    	$dkp_id = SNL;
+						    }
+						}
+
+						if(!isset($dkp_id)) $dkp_id = L;
 
 						/* classification ends here*/
 
