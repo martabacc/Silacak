@@ -100,22 +100,34 @@ $(document).ready(function(){
 
             console.log(posted_data);
             ajaxExtend({
-                url:  base_url + 'pegawai/edit',
+                url:  base_url + 'report/personal',
                 data: posted_data,
                 success: function(resp){
-                    WebTemplate.unblockUI("#master-page");
-                    if(resp.status == 'ok'){
-                        show_alert(mp_lang['success'], concat_message(mp_lang['info_edit'], resp.message), false);
+                	$('#resultTable').html('');
 
-                    }else if(resp.status == 'expired'){
-                        document.location = resp.message;
-                    }else{
-                        show_alert(mp_lang['error'], concat_message(mp_lang['error_edit'], resp.message));
-                    }
+                	result = resp;
+                	console.log(resp);
+                	if(result.length!=0){
+	                	$.each(result, function(i, item){        		
+					        var $tr = $('<tr>').append(
+					            $('<td>').text(item.dkp_keterangan),
+					            $('<td>').text(item.jumlah)
+					        ).appendTo('#resultTable');
+	                	});
+	                }
+	                else{
+	                	console.log('error');
+	                	var $tr = $('<tr>')
+	                	.text('Tidak ada data ditemukan!')
+					    .appendTo('#resultTable');
+
+	                }
+                    WebTemplate.unblockUI("#master-page");
                 },
                 error: function(resp){
-	        		show_alert(mp_lang['error'], "Terjadi kesalahan pada jaringan. Mohon hubungi admin.", true);	
-                	WebTemplate.unblockUI("#master-page");
+                	console.log( 'error' + JSON.stringify(resp));
+	        		// show_alert(mp_lang['error'], "Terjadi kesalahan pada jaringan. Mohon hubungi admin.", true);	
+                	// WebTemplate.unblockUI("#master-page");
                 }
             });
 		}

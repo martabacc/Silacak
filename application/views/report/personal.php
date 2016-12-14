@@ -48,11 +48,31 @@
 							</div>
 						</div>
 					</form>
-				</div>
+
+					<div class="table-scrollable " style="display:show;">
+						<table class="table-master table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>
+									Jenis Publikasi
+								</th>
+								<th>
+									Jumlah
+								</th>
+							</tr>
+						</thead>
+						<tbody id='resultTable'>
+
+						</tbody>
+						</table>
+					</div>
+
+
 			</div>
 		</div>
 	</div>
 </div>
+
 
 <div class="modal fade" id="lookup-pegawai" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
   <div class="modal-dialog modal-lg">

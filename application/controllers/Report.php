@@ -343,44 +343,56 @@ class Report extends CI_Controller {
 	}
 
 	public function personal(){
-		//$this->auth->set_access('view');
-		$this->auth->validate(TRUE, TRUE);
+		if ($this->input->server('REQUEST_METHOD') == 'GET'){
+			//$this->auth->set_access('view');
+			$this->auth->validate(TRUE, TRUE);
 
-		//set informasi halaman
-		$this->site_info->set_page_title('Laporan Pengunduhan per Pegawai');
-		//set breadcrumb
-		$this->site_info->add_breadcrumb('Laporan');
-		$this->site_info->add_breadcrumb('Laporan Pengunduhan per Pegawai');
-		//add menu highlight
-		$this->site_info->set_current_module('report');
-		$this->site_info->set_current_submodule('report_personal');
+			//set informasi halaman
+			$this->site_info->set_page_title('Laporan Pengunduhan per Pegawai');
+			//set breadcrumb
+			$this->site_info->add_breadcrumb('Laporan');
+			$this->site_info->add_breadcrumb('Laporan Pengunduhan per Pegawai');
+			//add menu highlight
+			$this->site_info->set_current_module('report');
+			$this->site_info->set_current_submodule('report_personal');
 
-		//add masterpage script
-		$this->asset_library->add_masterpage_script();
-		//add page javascript
-		$this->asset_library->add_js('js/pages/reportPersonal.js');
-		$this->asset_library->add_js('js/jquery.csv-0.71.js');
+			//add masterpage script
+			$this->asset_library->add_masterpage_script();
+			//add page javascript
+			$this->asset_library->add_js('js/pages/reportPersonal.js');
+			$this->asset_library->add_js('js/jquery.csv-0.71.js');
 
-		//filter pegawai
-		$pegawai = -1;
-        $pegawai_name = "";
-        if($this->input->get("pegawai") != null){
-        	$pegawai_id = $this->input->get("pegawai");
-        	$pegawai = $this->m_pegawai->get_by_column($pegawai_id);
+			//filter pegawai
+			$pegawai = -1;
+	        $pegawai_name = "";
+	        if($this->input->get("pegawai") != null){
+	        	$pegawai_id = $this->input->get("pegawai");
+	        	$pegawai = $this->m_pegawai->get_by_column($pegawai_id);
 
-        }
+	        }
 
-		$data = array();
-		$this->load->model('m_fakultas');
-		$data['fakultas'] = $this->m_fakultas->get("ISNUMERIC(fak_id)=1 AND fak_singkatan is not NULL", "fak_id asc");
-		$this->load->model('m_jurusan');
-		$data['jurusan'] = $this->m_jurusan->get("jur_nama_inggris is not NULL", 'jur_id asc');
-		$data["pegawai"] = json_encode($pegawai);
+			$data = array();
+			$this->load->model('m_fakultas');
+			$data['fakultas'] = $this->m_fakultas->get("ISNUMERIC(fak_id)=1 AND fak_singkatan is not NULL", "fak_id asc");
+			$this->load->model('m_jurusan');
+			$data['jurusan'] = $this->m_jurusan->get("jur_nama_inggris is not NULL", 'jur_id asc');
+			$data["pegawai"] = json_encode($pegawai);
 
-		//load view
-		$this->load->view('base/header');
-		$this->load->view('report/personal', $data);
-		$this->load->view('base/footer');
+			//load view
+			$this->load->view('base/header');
+			$this->load->view('report/personal', $data);
+			$this->load->view('base/footer');
+		}
+		else{
+			$peg_id = $this->input->post('peg_id');
+			$peg_name = $this->input->post('peg_name');
+			header('Content-Type: application/json');
+			$result = $this->m_publikasi_dosen->reportByPersonal($peg_id);
+			echo json_encode($result);
+		}
+
+
+
 
 	}
 

@@ -492,6 +492,24 @@ class M_publikasi_dosen extends MY_Model {
 		return $query->result();
 	}
 
+	
+	public function reportByPersonal($pegId) {
+
+		$this->db->select("dkp_keterangan", FALSE);
+		$this->db->select("count(*) as jumlah ", FALSE);
+
+		$this->db->from('anggota');
+        $this->db->join('pegawai', 'ang_pegawai = peg_id', 'left');
+        $this->db->join('publikasi_dosen', 'ang_publikasi = pub_id', 'left');
+        $this->db->join('detil_kode_publikasi', 'pub_detilkodepub = dkp_id', 'left');
+        $this->db->where('peg_id = '. $pegId);
+
+        $this->db->group_by("dkp_keterangan");
+
+        $query = $this->db->get();
+		return $query->result();
+	}
+
 	public function list_jurnal($fakultas = 0, $jurusan = 0, $minYear = 0, $maxYear = 0, $kode = 0, $pub_keterangan) {
 
 		$this->db->select("publikasi_dosen.*", FALSE);
