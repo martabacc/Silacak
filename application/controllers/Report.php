@@ -216,13 +216,13 @@ class Report extends CI_Controller {
         }
 
         $arrayOfNewClassifier = [
+        		SNL => 'SNL',
         		JIT => 'JIT',
         		SIT => 'SIT',
         		SITT => 'SITT',
         		JITT => 'JITT',
         		JNT => 'JNT',
         		JNTT => 'JNTT',
-        		SNL => 'SNL',
         		L => 'Lainnya'
         	];
         $data['newClassifier'] = [];
@@ -251,6 +251,8 @@ class Report extends CI_Controller {
 
 		$data['result_unknown'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_UNKNOWN,$tahun_mulai,$tahun_selesai);
 
+		// echo json_encode($data['all']);
+		// die();
 		foreach ($data['all'] as $value) {
         	 $result['all'][$value->kode]=$value->jumlah;
         }

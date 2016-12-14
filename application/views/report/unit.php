@@ -139,81 +139,30 @@
                                     </div>
                                 </div>
                                 <div class='portlet-body'>
-					<div class="table-scrollable">
-						<table class="table table-striped table-bordered table-hover">
-							<thead>
-								<tr>
-									<th>No</th>
-									<th >Kode</th>
-									<th >Fakultas</th>
-									<?php foreach ($newClassifier as $key => $value ){ ?>
-										<th >
-										<?php echo $this->lang->line('penarikan_prefix') . $key; ?>
-										</th>	
-									<?php } ?>
-									<th >Jumlah</th>	
-								</tr>
-							</thead>
-							<tbody>
 
-								<?php if(count($result) == 0): ?>
-								<tr>
-									<td colspan="3" class="text-center">Data Tidak Ditemukan</td>
-								</tr>
-								<?php endif; ?>
-								<?php 
-								$number = 1; 
-								$jumlah_all = 0;
-								$jumlah_jurnal = 0;
-								$jumlah_seminar = 0;
-								$jumlah_unknown = 0;
-								foreach ($classifier as $key => $val) { 
-									$value = $newClassifier[val];
-									// echo json_encode($value);
-									// die();
-									$value = $newClassifier[$key];
-									if(sizeof($value) == 0) $flag = false;
-									else $flag = true;
-									?>
-								<tr>
-									<td><?php echo $number++; ?></td>
-									<td ><?php if($flag) echo $value->kode ?></td>
-									<td ><?php if($flag) echo $value->unit ?></td>
-									<?php foreach($value as $k2 => $v){ ?>
+								<?php foreach($newClassifier as $key => $val){?>
+									
+									<ul>
+										<li>
+											<h3> Rekapitulasi Publikasi  <?php echo $key?> </h3>
+											<?php if(count($val) == 0): ?>
+											<tr>
+												<td colspan="3" class="text-center">Tidak ada publikasi <?php echo $key?> ditemukan </td>
+											</tr>
+											<?php endif; ?>
+											<ol> 
+											<?php foreach($val as $val2){?>
+												<li>
+													<?php echo $val2->unit ?> ( Kode <?php echo $val2->kode ?> )
+													<br>
+													Banyak publikasi : <?php echo $val2->jumlah?>
+												</li>
+											<?php } ?>	
+											</ol>
+										</li>
+									</ul>
 
-										<td class="text-right" >
-										<?php
-											if($flag){
-												// $jumlah_all += $value->jumlah; 
-												echo number_format($value->jumlah,0,',','.'); 
-
-											}
-											// if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
-											// $jumlah_jurnal += $result['jurnal'][$value->kode]; 
-											// echo number_format($result['jurnal'][$value->kode],0,',','.');
-										?>
-										</td>
-
-									<?php } ?>
-
-								</tr>	
-								<?php  } 
-
-								// echo json_encode($newClassifier);
-								// die();
-
-								?>
-								<!-- <tr>
-									<td colspan=3>Jumlah</td>
-									<td class="text-right" ><?php echo number_format($jumlah_all,0,',','.'); ?></td>
-									<td class="text-right" ><?php echo number_format($jumlah_jurnal,0,',','.'); ?></td>
-									<td class="text-right" ><?php echo number_format($jumlah_seminar,0,',','.'); ?></td>
-									<td class="text-right" ><?php echo number_format($jumlah_unknown,0,',','.'); ?></td>
-									<td class="text-right" ><?php echo number_format($jumlah_all-($jumlah_jurnal + $jumlah_seminar + $jumlah_unknown),0,',','.'); ?></td>
-								</tr> -->
-							</tbody>
-						</table>
-					</div>
+								<?php } ?>
 
                                 </div>
                             </div>
