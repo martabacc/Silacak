@@ -309,18 +309,6 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>scopus" class="nav-link " module="upload_scopus">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Data Scopus</span>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>scopus/klasifikasiscopus" class="nav-link " module="klas_scopus">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Klasifikasi Scopus</span>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
                                 <a href="<?php echo base_url(); ?>dev/debug" class="nav-link " module="report_unit">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Debug</span>

@@ -31,6 +31,7 @@
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
+    display:hidden;
     margin-top:100px!important;
     z-index:99999;
 	width: 100%;

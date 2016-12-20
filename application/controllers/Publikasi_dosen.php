@@ -548,12 +548,6 @@ class Publikasi_dosen extends CI_Controller {
 							if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false || preg_match("/([0-9]-[0-9])/", $desc)) $d = 'jurnal';
 							else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $d = 'seminar';
 
-							// klasifikasi terindeks
-							if($this->findFromAPI($title)){
-								if($d=='jurnal') $dkp_id = JIT;
-								else if($d=='seminar') $dkp_id= SIT;
-							}	
-
 							$allString = strtolower($title) . " " . strtolower($desc);
 	 
 							// klasifikasi internasional
@@ -574,6 +568,11 @@ class Publikasi_dosen extends CI_Controller {
 							    	$dkp_id = SNL;
 							    }
 							}
+							else if ( strpos($allString, 'jurnal') !== false  )
+						    {
+						    	$dkp_id = JNTT;
+						    }
+
 
 							if($dkp_id==0) $dkp_id = L;
 
@@ -623,8 +622,7 @@ class Publikasi_dosen extends CI_Controller {
 		}	
 	}
 
-	public function findFromAPI(/*$publicationName*/){
-		$title = $this->input->get('title');
+	public function findFromAPI($title){
 		$title = urlencode($title);
 		$apiKey = '917c7c3bf5227f960f04ebfc136d895c';
 		$url = 'http://api.elsevier.com/content/serial/title?apiKey='.$apiKey.'&&title='.$title;
@@ -702,12 +700,6 @@ class Publikasi_dosen extends CI_Controller {
 						if( strpos($desc, 'journal') !== false || strpos($desc, 'jurnal') !== false || preg_match("/([0-9]-[0-9])/", $desc)) $d = 'jurnal';
 						else if( strpos($desc, 'conf') !== false || strpos($desc, 'konf') !== false || preg_match("/(19[5-9][0-9]|20([0-9][0-9]))/", $desc)) $d = 'seminar';
 
-						// klasifikasi terindeks
-						if($this->findFromAPI($title)){
-							if($d=='jurnal') $dkp_id = JIT;
-							elseif($d=='seminar') $dkp_id= SIT;
-						}	
-
 						$allString = strtolower($title) . " " . strtolower($desc);
  
 						// klasifikasi internasional
@@ -729,6 +721,11 @@ class Publikasi_dosen extends CI_Controller {
 						    	$dkp_id = SNL;
 						    }
 						}
+						else if ( strpos($allString, 'jurnal') !== false  )
+						    {
+						    	$dkp_id = JNTT;
+						    }
+
 
 						if(!isset($dkp_id)) $dkp_id = L;
 
@@ -825,6 +822,7 @@ class Publikasi_dosen extends CI_Controller {
 	}
 
 	public function pull_detail($pub_id = 0){
+		// $pub_id = 1999;
 		$pub = $this->m_publikasi_dosen->get_by_column($pub_id);
 		if($pub){
 			$url = $pub->pub_url_scholar;
@@ -893,6 +891,44 @@ class Publikasi_dosen extends CI_Controller {
 				    
 				}
 			}
+
+
+			/* classification start here*/
+
+			// klasifikasi terindeks
+			if($this->findFromAPI($pub_keterangan)){
+				if($dkp_id==KODE_JURNAL) $dkp_id = JIT;
+				elseif($dkp_id==KODE_JURNAL) $dkp_id= SIT;
+			}	
+
+			$allString = strtolower($pub->pub_judul) . " " . strtolower($desc);
+
+			// klasifikasi internasional
+
+			if ( strpos($allString, 'international') !== false ) {
+			    if ( strpos($allString, 'seminar') !== false || strpos($allString, 'conference') !== false ) 
+			    {
+			    	$dkp_id = SITT;
+			    }
+
+			    elseif ( strpos($allString, 'journal') !== false )
+			    {
+			    	$dkp_id = JITT;
+			    }
+			}
+			elseif ( strpos($allString, 'nasional') !== false ) {
+			    if ( strpos($allString, 'seminar') !== false  )
+			    {
+			    	$dkp_id = SNL;
+			    }
+			}
+			else if ( strpos($allString, 'jurnal') !== false  )
+			    {
+			    	$dkp_id = JNTT;
+			    }
+
+			if(!isset($dkp_id)) $dkp_id = L;
+
 			$pub_id = $this->m_publikasi_dosen->update($pub_id, $dkp_id, false, false, false, false, false, false, false, false, false, false, $pub_year, $pub_month, false,
 								false, false, false, $pub_abstraksi, $pub_pengarang, $pub_volume, $pub_halaman, $pub_issue, $pub_keterangan, false, false, $pub_url_unduh, 0, false, false, now() );
 

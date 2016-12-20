@@ -396,33 +396,6 @@ class Report extends CI_Controller {
 
 	}
 
-	public function seminar($fakultas = false, $jurusan = false, $tahun = false)
-	{
-		//set informasi halaman
-		$this->site_info->set_page_title($this->lang->line('report_seminar'), '');
-		//set breadcrumb
-		$this->site_info->add_breadcrumb($this->lang->line('report_seminar'));
-		//add menu highlight
-		$this->site_info->set_current_module('report');
-		$this->site_info->set_current_submodule('report_seminar');
-
-		$this->report_by_keterangan($fakultas, $jurusan, $tahun, KODE_SEMINAR);
-	}
-
-	public function jurnal($fakultas = false, $jurusan = false, $tahun = false) 
-	{
-		//set informasi halaman
-		$this->site_info->set_page_title($this->lang->line('report_jurnal'), '');
-		//set breadcrumb
-		$this->site_info->add_breadcrumb($this->lang->line('report_jurnal'));
-		//add menu highlight
-		$this->site_info->set_current_module('report');
-		$this->site_info->set_current_submodule('report_jurnal');
-
-		$this->report_by_keterangan($fakultas, $jurusan, $tahun, KODE_JURNAL);	
-	}
-
-
 	public function peneliti()
 	{
 		//$this->auth->set_access('view');
@@ -517,8 +490,13 @@ class Report extends CI_Controller {
 
 		$this->load->model('m_publikasi_dosen');
 		//get data
-
-		$this->m_publikasi_dosen->get_datatable_by_keterangan($this->input->post('filter_fakultas'), $this->input->post('filter_jurusan'), $this->input->post('filter_tahun'), $this->input->post('filter_keterangan'));
+		
+		$this->m_publikasi_dosen->get_datatable_by_keterangan(
+			$this->input->post('filter_fakultas'), 
+			$this->input->post('filter_jurusan'), 
+			$this->input->post('filter_tahun'), 
+			$this->input->post('filter_keterangan')
+		);
 	}
 
 	public function download_by_keterangan($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = KODE_JURNAL){

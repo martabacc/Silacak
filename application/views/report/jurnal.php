@@ -3,7 +3,33 @@
 	var list_jurusan = JSON.parse('<?php echo $list_jurusan_json; ?>');
 	var fakultas = "<?php echo $fakultas; ?>";
 	var jurusan = "<?php echo $jurusan; ?>";
-	var kode = "<?php echo $kode; ?>";
+	var kode = "<?php 
+		$flag = 0;
+		if(is_array($kode)) {
+			if(in_array(JIT, $kode)) {
+				echo 'jurnal';
+				$flag = 1; //jurnal
+			}
+			else {
+				echo 'seminar';
+				$flag = 2 ; //seminar;
+			}
+		}
+		else{
+			echo $kode;
+			if(is_array($kode)) {
+				if(in_array($kode, [SIT,SITT, SNL])) {
+					$flag = 1; //jurnal
+				}
+				else if(in_array($kode, [JNT,JNTT,JIT,JITT])) {
+					$flag = 2 ; //seminar;
+				}
+				else{
+					$flag = -1;
+				}
+			}
+		}
+	?>";
 	var kode_jurnal = "<?php echo KODE_JURNAL; ?>";
 	var kode_seminar = "<?php echo KODE_SEMINAR; ?>";
 	</script>
@@ -17,7 +43,7 @@
 						<div class="portlet-title">
 							<div class="caption">
 								<i class="fa fa-user font-green-seagreen"></i>
-								<span class="caption-subject bold font-green-seagreen uppercase"><?php if (in_array($kode,[JIT,JITT]) ) echo $this->lang->line('report_jurnal_master'); else echo $this->lang->line('report_seminar_master'); ?></span>
+								<span class="caption-subject bold font-green-seagreen uppercase"><?php if ($flag==1 ) echo $this->lang->line('report_jurnal_master'); else if ($flag==2 ) echo $this->lang->line('report_seminar_master'); else echo ' Lainnya'; ?></span>
 							</div>
 							<div class="actions filter-control">
 								<div class="btn-group main-control"></div>
@@ -34,7 +60,20 @@
 									</div>
 								</div>
 								<form method="post" action="<?php echo base_url()?>publikasi_dosen/listpub" style='display:none;'>
-								<input type="hidden" id="filter_keterangan" value="<?php echo $kode; ?>" />
+								<input type="hidden" id="filter_keterangan" 
+								value="<?php
+									if(is_array($kode)) {
+										if(in_array(JIT, $kode)) {
+											echo 'jurnal';
+										}
+										else {
+											echo 'seminar';
+										}
+									}
+									else{
+										echo $kode;
+									}
+								 ?>" />
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>" />
 								<input type="hidden" name="journalName" id='journalName'>
 								<input type="hidden" name="kode" id='kode' value='<?php echo $kode; ?>'>
@@ -77,7 +116,7 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th><?php if (in_array($kode,[JIT,JITT])) echo $this->lang->line('report_jurnal_table'); else echo $this->lang->line('report_seminar_table'); ?></th>
+											<th><?php if ($flag==1 ) echo $this->lang->line('report_jurnal_table'); else if ($flag==2 ) echo $this->lang->line('report_seminar_table'); else echo 'Nama Publikasi'; ?></th>
 											<th><?php echo $this->lang->line('penarikan_total'); ?></th>
 										</tr>
 									</thead>

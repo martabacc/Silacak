@@ -21,6 +21,12 @@ class Dev extends CI_Controller {
 
 		//load this page model
 		$this->load->model('m_publikasi_dosen');
+
+
+		$this->load->model('m_anggota');
+		$this->load->model('m_pegawai');
+		$this->load->model('m_citations');
+
 		$this->load->model('m_log_sistem');
 
 		//load foregin lang if exist
@@ -28,6 +34,7 @@ class Dev extends CI_Controller {
 		$this->lang->load('module/anggota');
 		$this->lang->load('module/pegawai');
 		$this->lang->load('module/report');
+		$this->lang->load('module/citation');
 
 		//load lang, place this module after foreign lang, so module_ not overriden by foreign lang
 		$this->lang->load('module/publikasi_dosen');
@@ -104,157 +111,6 @@ class Dev extends CI_Controller {
 	 * @access: public
 	 * @return: no return, view a page
 	 */
-	public function penarikan_data_tahunan($fakultas = false, $jurusan = false, $is_download = false){
-		//$this->auth->set_access('view');
-		$this->auth->validate(TRUE, TRUE);
-		$this->load->model('m_fakultas');
-		$this->load->model('m_jurusan');
-
-		//set informasi halaman
-		$this->site_info->set_page_title($this->lang->line('report_penarikan_yearly'), '');
-		//set breadcrumb
-		$this->site_info->add_breadcrumb($this->lang->line('report_penarikan_yearly'));
-		//add menu highlight
-		$this->site_info->set_current_module('report');
-		$this->site_info->set_current_submodule('report_penarikan_data_tahunan');
-
-		//add page javascript
-		$this->asset_library->add_js('js/reports/penarikan_data_tahunan.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.min.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.resize.min.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.categories.min.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.axislabels.js');
-		
-        
-        $data = array();
-        $year = false;
-		if($year === false) $year = date("Y");
-		$data['result'] = $this->m_log_sistem->report_yearly_by_unit($fakultas, $jurusan);
-		$data['fakultas'] = $fakultas == 0 ? '' : $fakultas;
-		$data['filter_fakultas'] = $this->m_fakultas->get("ISNUMERIC(fak_id)=1 AND fak_singkatan is not null", "fak_singkatan asc");
-		$data['jurusan'] = $jurusan == 0 ? '' : $jurusan;
-
-		if($jurusan && !$fakultas){
-			$data['fakultas'] = $this->m_jurusan->get_by_column($jurusan)->jur_fakultas;
-		}
-
-		$data['filter_jurusan']	 = $this->m_jurusan->get("jur_nama_inggris is not NULL", "jur_id asc");
-		$data['list_jurusan'] = json_encode($data['filter_jurusan']);
-		$data['year'] = $year;
-		//load view
-		if($is_download == false){
-			$this->load->view('base/header');
-			$this->load->view('report/penarikan_data_tahunan', $data);
-			$this->load->view('base/footer');
-		}else{
-			$title = array("No", "Tahun", "Jumlah Penarikan Data");
-			$result = array();
-			foreach ($data['result'] as $key => $value) {
-				$row = array();
-				$row[] = $key + 1;
-				foreach ($value as $key2 => $value2) {
-					$row[] = $value2;
-				}
-				$result[] = $row;
-			}
-			
-			$filter = "";
-			if($jurusan != 0){
-				$jur = $this->m_jurusan->get_by_column($jurusan);
-				$filter = " Jurusan " . $jur->jur_nama_indonesia;
-			}else if($fakultas != 0){
-				$fak = $this->m_fakultas->get_by_column($fakultas);
-				$filter = " " . $fak->fak_nama_indonesia;
-			}
-		$datenow = date("d-m-Y");
-			download_excel("Laporan Penarikan Data per Tahun - $datenow".$filter, $title, $result);
-		}
-	}
-
-	public function unit($fakultas = false, $tahun_mulai = -1, $tahun_selesai = -1, $is_download=false){
-		//$this->auth->set_access('view');
-		$this->auth->validate(TRUE, TRUE);
-		$this->load->model('m_fakultas');
-		//set informasi halaman
-		$this->site_info->set_page_title($this->lang->line('report_unit'), '');
-		//set breadcrumb
-		$this->site_info->add_breadcrumb($this->lang->line('report_unit'));
-		//add menu highlight
-		$this->site_info->set_current_module('report');
-		$this->site_info->set_current_submodule('report_unit');
-
-		//add page javascript
-		$this->asset_library->add_js('js/reports/unit.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.min.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.resize.min.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.categories.min.js');
-		$this->asset_library->add_js('plugins/flot/jquery.flot.axislabels.js');
-		
-        
-        $data = array();
-        $result[] = array();
-        $result['all'][] = array();
-        $result['jurnal'][] = array();
-        $result['seminar'][] = array();
-        $result['unknown'][] = array();
-
-        $data['all'] = $this->m_publikasi_dosen->report_by_unit($fakultas, false, $tahun_mulai,$tahun_selesai);
-		$data['result_jurnal'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_JURNAL,$tahun_mulai,$tahun_selesai);
-		$data['result_seminar'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_SEMINAR,$tahun_mulai,$tahun_selesai);
-		$data['result_unknown'] = $this->m_publikasi_dosen->report_by_unit($fakultas, KODE_UNKNOWN,$tahun_mulai,$tahun_selesai);
-
-		foreach ($data['all'] as $value) {
-        	 $result['all'][$value->kode]=$value->jumlah;
-        }
-        foreach ($data['result_jurnal'] as $value) {
-        	 $result['jurnal'][$value->kode]=$value->jumlah;
-        }
-        foreach ($data['result_seminar'] as $value) {
-        	 $result['seminar'][$value->kode]=$value->jumlah;
-        }
-        foreach ($data['result_unknown'] as $value) {
-        	 $result['unknown'][$value->kode]=$value->jumlah;
-        }
-		$data['fakultas'] = $fakultas;
-		$data['awal'] = $tahun_mulai;
-		$data['akhir'] = $tahun_selesai;
-		$data['result'] = $result;
-		$data['filter_fakultas'] = $this->m_fakultas->get("ISNUMERIC(fak_id)=1 AND fak_singkatan is not null", "fak_id asc");
-
-		if($is_download == false){
-			//load view
-			$this->load->view('base/header');
-			$this->load->view('report/unit', $data);
-			$this->load->view('base/footer');
-		}
-		else{
-			$title = array("No", "Kode Unit", "Fakultas", "Jumlah Penarikan Data", "Jumlah Data Jurnal", "Jumlah Data Seminar","Jumlah Data BUuan Jurnal/Seminar","Jumlah Data Belum Terklasifikasi");
-			$result_excel = array();
-			foreach ($data['all'] as $key => $value) {
-				$row = array();
-				$row[] = $key + 1;
-				foreach ($value as $key2 => $value2) {
-					$row[] = $value2;
-				}
-				if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
-				if(!isset($result['seminar'][$value->kode]))  $result['seminar'][$value->kode] = 0;
-				if(!isset($result['unknown'][$value->kode]))  $result['unknown'][$value->kode] = 0;
-				$row[] = $result['jurnal'][$value->kode];
-				$row[] = $result['seminar'][$value->kode];
-				$row[] = $result['unknown'][$value->kode];
-				$row[] = $value->jumlah - ( $result['jurnal'][$value->kode] + $result['seminar'][$value->kode] + $result['unknown'][$value->kode] );
-				$result_excel[] = $row;
-			}
-			
-			$filter = "";
-			if($fakultas != 0){
-				$fak = $this->m_fakultas->get_by_column($fakultas);
-				$filter = " " . $fak->fak_nama_indonesia;
-			}
-		$datenow = date("d-m-Y");
-			download_excel("Laporan Penarikan Data Per Unit - $datenow".$filter, $title, $result_excel);
-		}
-	}
 	
 	private function report_by_keterangan($fakultas = false, $jurusan = false, $tahun = false, $kode = false) {
 		//$this->auth->set_access('view');
@@ -275,9 +131,10 @@ class Dev extends CI_Controller {
 		if(is_array($kode)){
 			foreach($kode as $z){
 				$data['result'] = array_merge($data['result'], $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $z));
+
 			}
 
-			$data['kode'] = KODE_JURNAL;
+			$data['kode'] = $kode;
 		}
 		elseif(!is_array($kode)){
 			$data['result'] = $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
@@ -313,8 +170,13 @@ class Dev extends CI_Controller {
 	}
 
 	public function debug($fakultas = false, $jurusan = false, $tahun = false, $kode = false){
-		$z = 11;
-		$result = $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $z);
+		$zz = [SIT,SITT, SNL];
+		$result = [];
+		foreach($zz as $z){
+				$result = array_merge($result, $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $z));
+
+			}
+
 		print_r($result);
 		die();
 
@@ -322,13 +184,15 @@ class Dev extends CI_Controller {
 	public function seminar($fakultas = false, $jurusan = false, $tahun = false)
 	{
 
+
 		//set informasi halaman
 		$this->site_info->set_page_title($this->lang->line('report_seminar'), '');
 		//set breadcrumb
 		$this->site_info->add_breadcrumb($this->lang->line('report_seminar'));
 		//add menu highlight
 		$kode = [SIT,SITT, SNL];
-		$this->site_info->set_current_module('dev');
+
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('all_sem');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
@@ -341,10 +205,10 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb($this->lang->line('report_jurnal'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('all_jur');
 
-		$kode = [JIT,JITT];
+		$kode = [JIT,JITT, JNT, JNTT];
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);	
 	}
 
@@ -560,7 +424,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('jit'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_jit');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, JIT);
@@ -573,7 +437,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('sit'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_sit');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, SIT);
@@ -586,7 +450,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('sitt'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_sitt');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, SITT);
@@ -600,7 +464,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('jitt'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_jitt');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, JITT);
@@ -613,7 +477,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('jnt'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_jnt');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, JNT);
@@ -626,7 +490,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('jntt'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_jntt');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, JNTT);
@@ -639,7 +503,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan '. $this->lang->line('snl'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_snl');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, SNL);
@@ -653,7 +517,7 @@ class Dev extends CI_Controller {
 		//set breadcrumb
 		$this->site_info->add_breadcrumb('Laporan Publikasi'. $this->lang->line('l'));
 		//add menu highlight
-		$this->site_info->set_current_module('dev');
+		$this->site_info->set_current_module('report');
 		$this->site_info->set_current_submodule('report_l');
 
 		$this->report_by_keterangan($fakultas, $jurusan, $tahun, L);

@@ -589,12 +589,14 @@ class M_publikasi_dosen extends MY_Model {
 
 		$where = 'pub_keterangan IS NOT NULL';
 
-        if ($kode != false) {
-        	$where .= ' AND pub_detilkodepub = ' . $kode;
+        if ($kode == 'jurnal') {
+        	$where .= ' AND pub_detilkodepub in ('.JNT.','.JNTT.','.JITT.','.JIT.')' ;
+        }
+        else if ($kode == 'seminar') {
+        	$where .= ' AND pub_detilkodepub in (' . SITT . ','.SIT.','.SNL .')'  ;
         }
         else {
-
-        	$where .= ' AND pub_detilkodepub = ' . KODE_JURNAL;
+        	$where .= ' AND pub_detilkodepub = ' . $kode;
         }
 
         $where .= ' AND pub_status_tarik = 1 ';

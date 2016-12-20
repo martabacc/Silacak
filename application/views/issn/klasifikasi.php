@@ -16,7 +16,8 @@
 				<div class="portlet-body form">
 					<form action="javascript:void(0);" method="post" class="form-detail form-horizontal form-bordered form-label-stripped">
                         <div class="alert alert-info">
-                            <strong>Informasi : </strong> Klik tombol dibawah untuk me-refresh / mengklasifikasikan / mencocokkan data di database dengan data Jurnal ISSN yang telah dimasukkan di halaman <a href="<?php echo base_url('issn');?>">Data Issn</a>
+                            <strong>Informasi : </strong> Klik tombol dibawah untuk me-refresh / mengklasifikasikan / mencocokkan data di database dengan data Jurnal ISSN yang telah dimasukkan di halaman <a href="<?php echo base_url('issn');?>">Data Issn
+				</a>
                         </div>
 						<div class="form-actions">
 							<div class="row">
