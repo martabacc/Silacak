@@ -490,7 +490,7 @@ class Report extends CI_Controller {
 
 		$this->load->model('m_publikasi_dosen');
 		//get data
-		
+
 		$this->m_publikasi_dosen->get_datatable_by_keterangan(
 			$this->input->post('filter_fakultas'), 
 			$this->input->post('filter_jurusan'), 
@@ -503,9 +503,27 @@ class Report extends CI_Controller {
 		$data = array();
 		$this->load->model('m_publikasi_dosen');
 		
-		$data['result'] = $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
+		$data['result'] = [];
+
+		if($kode=='jurnal'){
+			foreach([JIT,JITT,JNT, JNTT] as $z){
+				$data['result'] = array_merge($data['result'],$this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $z));
+			}
+		}
+		else if($kode=='seminar'){
+			foreach([SIT,SITT, SNL] as $z){
+				$data['result'] = array_merge($data['result'],$this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $z));
+			}
+		}
+		else{
+			$data['result'] = $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
+		}
 		
-		$title = array("No", ($kode == KODE_JURNAL) ? "Nama Jurnal" : "Nama Seminar", "Jumlah");
+	
+		if(is_array($kode)) $cdc = $kode[0];
+		else $cdc = $kode;
+
+		$title = array("No", (in_array($cdc, [JIT,JITT,JNT])) ? "Nama Jurnal" : "Nama Seminar", "Jumlah");
 		$result = array();
 		foreach ($data['result'] as $key => $value) {
 			$row = array();
@@ -528,7 +546,28 @@ class Report extends CI_Controller {
 		}
 
 		$filter .= " Tahun " . $tahun;
-		$keterangan = ($kode == KODE_JURNAL) ? " Jurnal" : " Seminar";
+
+		if($kode=='jurnal'){
+			$keterangan = ' Semua Jurnal';
+		}
+		else if($kode=='seminar'){
+			$keterangan = ' Semua Seminar';
+		}
+		else{
+			switch($kode){
+				case JIT: $keterangan = ' '.$this->lang->line('jit'); break;
+				case JITT: $keterangan = ' '.$this->lang->line('jitt'); break;
+				case JNT: $keterangan = ' '.$this->lang->line('jnt'); break;
+				case JNTT: $keterangan = ' '.$this->lang->line('jntt'); break;
+				case SIT: $keterangan = ' '.$this->lang->line('sit'); break;
+				case SITT: $keterangan = ' '.$this->lang->line('sitt'); break;
+				case SN: $keterangan = ' '.$this->lang->line('snl'); break;
+				case L: $keterangan = ' Publikasi Lainnya'; break;
+
+
+			}
+
+		}
 
 		$datenow = date("d-m-Y");
 		$file_name = "Laporan Rekapitulasi Data".$keterangan.$filter." ".$datenow;

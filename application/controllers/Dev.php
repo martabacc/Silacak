@@ -311,43 +311,6 @@ class Dev extends CI_Controller {
 		$this->m_publikasi_dosen->get_datatable_by_keterangan($this->input->post('filter_fakultas'), $this->input->post('filter_jurusan'), $this->input->post('filter_tahun'), $this->input->post('filter_keterangan'));
 	}
 
-	public function download_by_keterangan($fakultas = 0, $jurusan = 0, $tahun = 0, $kode = KODE_JURNAL){
-		$data = array();
-		$this->load->model('m_publikasi_dosen');
-		
-		$data['result'] = $this->m_publikasi_dosen->report_by_keterangan($fakultas, $jurusan, $tahun, $kode);
-		
-		$title = array("No", ($kode == KODE_JURNAL) ? "Nama Jurnal" : "Nama Seminar", "Jumlah");
-		$result = array();
-		foreach ($data['result'] as $key => $value) {
-			$row = array();
-			$row[] = $key + 1;
-			foreach ($value as $key2 => $value2) {
-				$row[] = $value2;
-			}
-			$result[] = $row;
-		}
-		
-		$filter = "";
-		if($jurusan != 0){
-			$this->load->model('m_jurusan');
-			$jur = $this->m_jurusan->get_by_column($jurusan);
-			$filter = " Jurusan " . $jur->jur_nama_indonesia;
-		}else if($fakultas != 0){
-			$this->load->model('m_fakultas');
-			$fak = $this->m_fakultas->get_by_column($fakultas);
-			$filter = " " . $fak->fak_nama_indonesia;
-		}
-
-		$filter .= " Tahun " . $tahun;
-		$keterangan = ($kode == KODE_JURNAL) ? " Jurnal" : " Seminar";
-
-		$datenow = date("d-m-Y");
-		$file_name = "Laporan Rekapitulasi Data".$keterangan.$filter." ".$datenow;
-		
-		download_excel($file_name, $title, $result);
-	
-	}
 
 	public function tahun_publikasi($fakultas = false, $jurusan = false, $is_download = false){
 		//$this->auth->set_access('view');
