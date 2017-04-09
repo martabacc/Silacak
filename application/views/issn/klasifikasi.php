@@ -14,7 +14,8 @@
 					<div class="actions"></div>
 				</div>
 				<div class="portlet-body form">
-					<form action="javascript:void(0);" method="post" class="form-detail form-horizontal form-bordered form-label-stripped">
+					<form action="<?php echo base_url('issn/progress');?>" method="post" class="form-detail form-horizontal form-bordered form-label-stripped">
+						<input type="hidden" id='tkn' name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <div class="alert alert-info">
                             <strong>Informasi : </strong> Klik tombol dibawah untuk me-refresh / mengklasifikasikan / mencocokkan data di database dengan data Jurnal ISSN yang telah dimasukkan di halaman <a href="<?php echo base_url('issn');?>">Data Issn
 				</a>

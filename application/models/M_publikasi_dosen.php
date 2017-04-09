@@ -503,6 +503,7 @@ class M_publikasi_dosen extends MY_Model {
         $this->db->join('publikasi_dosen', 'ang_publikasi = pub_id', 'left');
         $this->db->join('detil_kode_publikasi', 'pub_detilkodepub = dkp_id', 'left');
         $this->db->where('peg_id = '. $pegId);
+        $this->db->where('dkp_isactive = 1');
 
         $this->db->group_by("dkp_keterangan");
 

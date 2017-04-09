@@ -214,18 +214,13 @@
                                     <span class="title">Laporan Personal</span>
                                 </a>
                             </li>
-                            <!-- <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>report/jurnal" class="nav-link " module="report_jurnal">
+
+                            <li class="nav-item" style='background-color:yellow;'>
+                                <a href="<?php echo base_url(); ?>report/lab" class="nav-link " module="report_lab">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">Laporan Data Jurnal</span>
+                                    <span class="title">(DEBUG) Laporan per Laboratorium</span>
                                 </a>
                             </li>
-                            <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>report/seminar" class="nav-link " module="report_seminar">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Laporan Data Seminar</span>
-                                </a>
-                            </li> -->
 
                             <li class="nav-item ">
                                 <a href="<?php echo base_url(); ?>dev/seminar" class="nav-link " module="all_sem">
@@ -306,12 +301,6 @@
                                 <a href="<?php echo base_url(); ?>issn/klasifikasiissn" class="nav-link " module="klas_issn">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Klasifikasi ISSN</span>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="<?php echo base_url(); ?>dev/debug" class="nav-link " module="report_unit">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Debug</span>
                                 </a>
                             </li>
                         </ul>

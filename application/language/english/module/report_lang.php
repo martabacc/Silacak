@@ -9,6 +9,7 @@ $lang['report_seminar'] = 'Laporan Data Seminar';
 $lang['report_seminar_master'] = 'Daftar Seminar';
 $lang['report_seminar_table'] = 'Nama Seminar';
 $lang['report_unit'] = 'Laporan Pengunduhan Data Per Unit';
+$lang['report_lab'] = 'Laporan Pengunduhan Data Per Laboratorium';
 $lang['report_year_publikasi'] = 'Laporan Publikasi per Tahun';
 $lang['penarikan_total'] = 'Jumlah Data Penarikan Publikasi';
 $lang['penarikan_seminar'] = 'Jumlah Data <br>Seminar';

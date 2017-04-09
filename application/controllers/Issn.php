@@ -337,7 +337,7 @@ class Issn extends CI_Controller {
 		// run on linux
 		$path = $path. " > /dev/null &";
 		
-		// exec($path);
+		exec($path);
 
 		$this->load->view('base/header');
 		$this->load->view('issn/progress');

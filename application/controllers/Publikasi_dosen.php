@@ -136,7 +136,6 @@ class Publikasi_dosen extends CI_Controller {
 		
 	}
 
-
 	public function download(){
 		$this->auth->validate(TRUE, TRUE);
 		$kode_pub = $this->input->get("kode_pub");
@@ -720,6 +719,7 @@ class Publikasi_dosen extends CI_Controller {
 						    {
 						    	$dkp_id = SNL;
 						    }
+						    
 						}
 						else if ( strpos($allString, 'jurnal') !== false  )
 						    {

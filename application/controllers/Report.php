@@ -22,6 +22,7 @@ class Report extends CI_Controller {
 		//load this page model
 		$this->load->model('m_publikasi_dosen');
 		$this->load->model('m_log_sistem');
+		// $this->load->model('m_repository_simpel');
 
 		//load foregin lang if exist
 		$this->lang->load('module/detil_kode_publikasi');
@@ -171,6 +172,63 @@ class Report extends CI_Controller {
 		}
 	}
 
+	/*
+	 * method lab
+	 * fungsi untuk menampilkan halaman rekapitulasi publikasi per lab
+	 * addition model M_repository_simpel
+	 * untuk catch data dari db simpel
+	 *
+	 * @author: Rona
+	 * @access: public
+	 * @return: no return, view a page
+	 */
+	public function lab($fakultas = false, $jurusan =false, $tahun_mulai = 0, $tahun_selesai = 0){
+
+		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
+		//$this->auth->set_access('view');
+		$this->auth->validate(TRUE, TRUE);
+		$this->load->model('m_fakultas');
+		$this->load->model('m_jurusan');
+		$this->load->model('m_repository_simpel');
+		//set informasi halaman
+		$this->site_info->set_page_title($this->lang->line('report_lab'), '');
+		//set breadcrumb
+		$this->site_info->add_breadcrumb($this->lang->line('report_lab'));
+		//add menu highlight
+		$this->site_info->set_current_module('report');
+		$this->site_info->set_current_submodule('report_lab');
+
+		//add page javascript
+		$this->asset_library->add_css('css/select2.min.css');
+		$this->asset_library->add_js('js/select2.min.js');
+		$this->asset_library->add_js('js/reports/lab.js');
+		
+
+		$data['fakultas'] = $fakultas;
+		$data['awal'] = $tahun_mulai;
+		$data['akhir'] = $tahun_selesai;
+		$data['filter_fakultas'] = $this->m_repository_simpel->getFaculties();
+		$data['filter_jurusan'] = $this->m_repository_simpel->getDepts();
+		$data['dkp'] = [
+        		SNL => 'SNL',
+        		JIT => 'JIT',
+        		SIT => 'SIT',
+        		SITT => 'SITT',
+        		JITT => 'JITT',
+        		JNT => 'JNT',
+        		JNTT => 'JNTT',
+        		L => 'Lainnya'
+        ];
+
+		$data['result'] = $this->m_repository_simpel->getPublikasiPerLab($fakultas,$jurusan,$tahun_mulai, $tahun_selesai);
+
+		$this->load->view('base/header');
+		$this->load->view('report/lab', $data);
+		$this->load->view('base/footer');
+			
+	}
+
 	public function unit($fakultas = false, $tahun_mulai = -1, $tahun_selesai = -1, $is_download=false){
 
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
@@ -271,30 +329,30 @@ class Report extends CI_Controller {
 		$data['result'] = $result;
 		$data['filter_fakultas'] = $this->m_fakultas->get("ISNUMERIC(fak_id)=1 AND fak_singkatan is not null", "fak_id asc");
 
-		if($is_download == false){
-			//load view
-			$this->load->view('base/header');
-			$this->load->view('report/unit', $data);
-			$this->load->view('base/footer');
-		}
-		else{
-			$title = array("No", "Kode Unit", "Fakultas", "Jumlah Penarikan Data", "Jumlah Data Jurnal", "Jumlah Data Seminar","Jumlah Data BUuan Jurnal/Seminar","Jumlah Data Belum Terklasifikasi");
-			$result_excel = array();
-			foreach ($data['all'] as $key => $value) {
-				$row = array();
-				$row[] = $key + 1;
-				foreach ($value as $key2 => $value2) {
-					$row[] = $value2;
-				}
-				if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
-				if(!isset($result['seminar'][$value->kode]))  $result['seminar'][$value->kode] = 0;
-				if(!isset($result['unknown'][$value->kode]))  $result['unknown'][$value->kode] = 0;
-				$row[] = $result['jurnal'][$value->kode];
-				$row[] = $result['seminar'][$value->kode];
-				$row[] = $result['unknown'][$value->kode];
-				$row[] = $value->jumlah - ( $result['jurnal'][$value->kode] + $result['seminar'][$value->kode] + $result['unknown'][$value->kode] );
-				$result_excel[] = $row;
+			if($is_download == false){
+				//load view
+				$this->load->view('base/header');
+				$this->load->view('report/unit', $data);
+				$this->load->view('base/footer');
 			}
+			else{
+				$title = array("No", "Kode Unit", "Fakultas", "Jumlah Penarikan Data", "Jumlah Data Jurnal", "Jumlah Data Seminar","Jumlah Data BUuan Jurnal/Seminar","Jumlah Data Belum Terklasifikasi");
+				$result_excel = array();
+				foreach ($data['all'] as $key => $value) {
+					$row = array();
+					$row[] = $key + 1;
+					foreach ($value as $key2 => $value2) {
+						$row[] = $value2;
+					}
+					if(!isset($result['jurnal'][$value->kode])) $result['jurnal'][$value->kode] = 0;
+					if(!isset($result['seminar'][$value->kode]))  $result['seminar'][$value->kode] = 0;
+					if(!isset($result['unknown'][$value->kode]))  $result['unknown'][$value->kode] = 0;
+					$row[] = $result['jurnal'][$value->kode];
+					$row[] = $result['seminar'][$value->kode];
+					$row[] = $result['unknown'][$value->kode];
+					$row[] = $value->jumlah - ( $result['jurnal'][$value->kode] + $result['seminar'][$value->kode] + $result['unknown'][$value->kode] );
+					$result_excel[] = $row;
+				}
 			
 			$filter = "";
 			if($fakultas != 0){
@@ -341,8 +399,18 @@ class Report extends CI_Controller {
 		$this->load->view('report/jurnal', $data);
 		$this->load->view('base/footer');
 	}
-
-	public function personal(){
+	/*
+	 * method personal
+	 * fungsi untuk menampilkan halaman rekapitulasi publikasi per anggota / per dosen
+	 * notice : hanya menampilkan halaman dengan select daftar dosen
+	 * angka2 rekapitulasi diload dengan ajax.
+	 *
+	 * @author: Rona
+	 * @access: public
+	 * @return: no return, view a page
+	 */
+	public function personal()
+	{
 		if ($this->input->server('REQUEST_METHOD') == 'GET'){
 			//$this->auth->set_access('view');
 			$this->auth->validate(TRUE, TRUE);
@@ -390,10 +458,6 @@ class Report extends CI_Controller {
 			$result = $this->m_publikasi_dosen->reportByPersonal($peg_id);
 			echo json_encode($result);
 		}
-
-
-
-
 	}
 
 	public function peneliti()
@@ -472,7 +536,6 @@ class Report extends CI_Controller {
 		$file_name = "Laporan Penarikan Data Pengarang " . $datenow;
 		
 		download_excel($file_name, $title, $result);
-	
 	}
 
 	public function get_datamaster_keterangan(){
