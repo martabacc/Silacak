@@ -202,6 +202,8 @@ class Report extends CI_Controller {
 		//add page javascript
 		$this->asset_library->add_css('css/select2.min.css');
 		$this->asset_library->add_js('js/select2.min.js');
+
+		//script page
 		$this->asset_library->add_js('js/reports/lab.js');
 
 		$data['awal'] = $tahun_mulai;
@@ -209,13 +211,13 @@ class Report extends CI_Controller {
 		$data['filter_fakultas'] = $this->m_repository_simpel->getFaculties();
 		$data['filter_jurusan'] = $this->m_repository_simpel->getDepts();
 		$data['dkp'] = [
-        		SNL => 'SNL',
         		JIT => 'JIT',
+        		JITT => 'JITT',
         		SIT => 'SIT',
         		SITT => 'SITT',
-        		JITT => 'JITT',
         		JNT => 'JNT',
         		JNTT => 'JNTT',
+        		SNL => 'SNL',
         		L => 'Lainnya'
         ];
 
@@ -224,7 +226,9 @@ class Report extends CI_Controller {
 
 		$data['jurusan'] = $jurusan;
 		$data['fakultas'] = $fakultas;
-		if(!$fakultas && $jurusan) $data['result'][0]['nama_fak'] = $this->m_repository_simpel->getFakultasName($jurusan);
+		if(!$fakultas && $jurusan) 
+			//supaya di tampilan lebih rapi
+			$data['result'][0]['nama_fak'] = $this->m_repository_simpel->getFakultasName($jurusan);
 
 		$this->load->view('base/header');
 		$this->load->view('report/lab', $data);

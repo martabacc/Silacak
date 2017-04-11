@@ -1,6 +1,6 @@
 # Sistem Informasi Pelacakan
 --
-This document summarizes my work as a part timer @LPTSI ITS Surabaya. Started at 1st Sept 2016, I'm assigned to maintain and adding new features according to LPPM needs. It is built in CodeIgniter. Previous developers were developed it nicely, but still leave some smelly codes. Didnt use any kind of pattern.
+This document summarizes my work as a part timer @LPTSI ITS Surabaya. Started at 1st Sept 2016, I was assigned to maintain and adding new features according to LPPM needs. It is built in CodeIgniter. Previous developers were developed it nicely, but still leave some smelly codes. Didnt use any kind of pattern.
 
 
 ## Changelog
@@ -19,7 +19,7 @@ Current development target (Assigned 6 April 2017) :
 ### Finished Assignments
 1. Kategorisasi berdasarkan JIT, JITT (sampe 8 filter)
 2. Using Elsevier API to automate the publication checking process.
-3. [Canceled] Group by per lab (dari data Excel yang diberikan)
+3. [Canceled] Group by per lab (dari data Excel yang diberikan)  
    Due to insufficient lecturer's data.
 4. Group by per lab (dengan pusat data dari DB SIMPEL)
 

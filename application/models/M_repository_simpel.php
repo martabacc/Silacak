@@ -97,7 +97,7 @@ class M_repository_simpel extends MY_Model {
 							from labits where labits_id = '.$idLab)
 							->first_row()->labits_nama;	
 
-		$q = 'select dkp_id, count(*) as jumlah
+		$q = 'select dkp_id, dkp_urutan, count(*) as jumlah
 				from anggota
 				right join pegawai on pegawai.peg_id = anggota.ang_pegawai
 				right join publikasi_dosen on publikasi_dosen.pub_id = anggota.ang_publikasi
@@ -113,7 +113,7 @@ class M_repository_simpel extends MY_Model {
 
 			$q .= ($yearStart ? 'and YEAR(pub_created_at) >= '. $yearStart : '') .
 				  ($yearEnd ? 'and YEAR(pub_created_at) <= '. $yearEnd : '') .
-			  	   'group by dkp_id';
+			  	   'group by dkp_id,dkp_urutan order by dkp_urutan asc';
 
 			foreach($this->db->query($q)->result() as $data)
 				$result['table'][$data->dkp_id] = $data->jumlah;

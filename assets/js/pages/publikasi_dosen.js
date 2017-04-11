@@ -131,7 +131,7 @@ $(document).ready(function(){
 	$('#master-page').masterPage({
 		primaryKey: 'pub_id',
 		detailFocusId: 'pub_id',
-		dataUrl: base_url + 'publikasi_dosen/get_datamaster',
+		dataUrl: base_url + 'publikasi_dosen/get_datamaster_debug', //PLEASECHANGEHERE
 		detailUrl: base_url + 'publikasi_dosen/detail',
 		addUrl: base_url + 'publikasi_dosen/add',
 		editUrl: base_url + 'publikasi_dosen/edit',
@@ -282,6 +282,12 @@ $(document).ready(function(){
 			{id:'filter_pegawai', submittedName:'pub_pegawai'},
 			{id:'filter_startyear', submittedName:'pub_startyear'},
 			{id:'filter_endyear', submittedName:'pub_endyear'},
+			// added 11 Mar - filter per lab, jur n %like%
+			{id:'filter_fakultas', submittedName:'pub_fakultas'},
+			{id:'filter_jurusan', submittedName:'pub_jurusan'},
+			{id:'filter_lab', submittedName:'pub_lab'},
+			{id:'filter_likeness', submittedName:'pub_likeness'},
+			//end added filter - 11 Mar
 			{id:'filter_tarik', submittedName:'pub_status_tarik'}],
 		orders: [[26, 'desc']],
 		validation: {pub_id: {digits: true},

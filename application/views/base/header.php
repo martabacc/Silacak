@@ -102,6 +102,12 @@
                             <span class="title">Publikasi</span>
                         </a>
                     </li>
+                    <li class="nav-item" style="background-color:yellow">
+                        <a href="<?php echo base_url(); ?>publikasi_dosen/ind_dbg" module="publikasi_dosen_debug">
+                            <i class="icon-notebook"></i>
+                            <span class="title">Publikasi DEBUG</span>
+                        </a>
+                    </li>
                     <li class="nav-item ">
                         <a href="<?php echo base_url(); ?>anggota" module="anggota">
                             <i class="icon-users"></i>
@@ -215,10 +221,10 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item" style='background-color:yellow;'>
+                            <li class="nav-item">
                                 <a href="<?php echo base_url(); ?>report/lab" class="nav-link " module="report_lab">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">(DEBUG) Laporan per Laboratorium</span>
+                                    <span class="title">Laporan per Laboratorium</span>
                                 </a>
                             </li>
 
