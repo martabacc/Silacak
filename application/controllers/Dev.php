@@ -160,7 +160,7 @@ class Dev extends CI_Controller {
 		$data['list_fakultas'] = $this->m_fakultas->get("ISNUMERIC(fak_id)=1 AND fak_singkatan is not null", 'fak_singkatan asc');
 		$data['list_jurusan'] = $this->m_jurusan->get("jur_nama_inggris is not NULL", 'jur_id asc');
 		$data['list_jurusan_json'] = json_encode($data['list_jurusan']);
-		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('', 'dkp_keterangan asc');
+		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('dkp_isactive = 1', 'dkp_urutan asc');
 
 
 		//load view

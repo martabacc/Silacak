@@ -80,7 +80,7 @@ class Publikasi_dosen extends CI_Controller {
 
 		$data = array();
 		$this->load->model('m_detil_kode_publikasi');
-		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('', 'dkp_keterangan asc');
+		$data['detil_kode_publikasi'] = $this->m_detil_kode_publikasi->get('dkp_isactive=1', 'dkp_urutan asc');
 		$data["pegawai"] = $pegawai;
 		$data["pegawai_name"] = $pegawai_name;
 		$data["status_tarik"] = $status_tarik;

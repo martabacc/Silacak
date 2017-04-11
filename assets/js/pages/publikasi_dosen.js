@@ -479,6 +479,7 @@ $(document).ready(function(){
 	{
 		$('#filter_tarik').val(status_tarik);
 		var masterPage = get_masterpage_obj('#master-page');
+		console.log(masterPage);
 		masterPage.refreshData();
 	}
 
