@@ -203,9 +203,7 @@ class Report extends CI_Controller {
 		$this->asset_library->add_css('css/select2.min.css');
 		$this->asset_library->add_js('js/select2.min.js');
 		$this->asset_library->add_js('js/reports/lab.js');
-		
 
-		$data['fakultas'] = $fakultas;
 		$data['awal'] = $tahun_mulai;
 		$data['akhir'] = $tahun_selesai;
 		$data['filter_fakultas'] = $this->m_repository_simpel->getFaculties();
@@ -222,6 +220,11 @@ class Report extends CI_Controller {
         ];
 
 		$data['result'] = $this->m_repository_simpel->getPublikasiPerLab($fakultas,$jurusan,$tahun_mulai, $tahun_selesai);
+
+
+		$data['jurusan'] = $jurusan;
+		$data['fakultas'] = $fakultas;
+		if(!$fakultas && $jurusan) $data['result'][0]['nama_fak'] = $this->m_repository_simpel->getFakultasName($jurusan);
 
 		$this->load->view('base/header');
 		$this->load->view('report/lab', $data);

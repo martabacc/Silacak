@@ -55,9 +55,6 @@
 
 						<?php 
 
-
-
-
 			        	$helper = [
 			        		SNL => 'SNL',
 			        		JIT => 'JIT',
@@ -68,8 +65,8 @@
 			        		JNTT => 'JNTT',
 			        		L => 'Lainnya'
 			        	];
-						foreach ($result as $p1=>$fak) { 
-							if(isset($fak['nama_fak'])) ?> <h2> <?php echo $p1 + 1 .'. ' . $fak['nama_fak']; ?></h2>
+						foreach ($result as $p1=>$fak) {?> 
+							<h2> <?php echo $p1 + 1 .'. ' . $fak['nama_fak']; ?></h2>
 
 							<?php foreach($fak['depts'] as $p2=>$dept){
 								if(isset($dept['nama_jur'])) ?> <h3> <?php echo ++$p2 . '. ' . $dept['nama_jur'];?></h3>

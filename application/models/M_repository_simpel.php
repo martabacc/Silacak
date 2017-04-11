@@ -65,17 +65,25 @@ class M_repository_simpel extends MY_Model {
 		return $res;
 	}
 
-	public function getPublikasiPerLab($fakultas, $jurusan, $lab, $tahun_mulai, $tahun_selesai)
+	public function getPublikasiPerLab($fakultas, $jurusan, $tahun_mulai, $tahun_selesai)
 	{
-		if(!$fakultas && !$jurusan && !$lab) //none of the filter is selected
+		if(!$fakultas && !$jurusan) //none of the filter is selected
 			return $this->getDataLabPerFaculty(false, $tahun_mulai, $tahun_selesai);
 		else{
 
 			$helper = [];
-
-			if($lab) array_push($helper[0]['depts']['labs'], $this->getDataPerLab($fakultas, $tahun_mulai, $tahun_selesai));
-			if($jurusan) array_push($helper[0]['depts'], $this->getDataLabPerDepartment($jurusan , $tahun_mulai, $tahun_selesai));
-			if($fakultas) return $this->getDataLabPerFaculty($fakultas, $tahun_mulai, $tahun_selesai);
+			// if($lab) array_push($helper[0]['depts']['labs'], $this->getDataPerLab($fakultas, $tahun_mulai, $tahun_selesai));
+			// echo var_dump($fakultas==true);
+			// die();
+			if($jurusan){
+				$help = [];
+				$data = [];
+				$data['depts']= [];
+				array_push($data['depts'], $this->getDataLabPerDepartment($jurusan , $tahun_mulai, $tahun_selesai));
+				array_push($help, $data);
+				return $help;
+			}
+			else if($fakultas) return $this->getDataLabPerFaculty($fakultas, $tahun_mulai, $tahun_selesai);
 
 			return $helper;
 		}
@@ -169,12 +177,16 @@ class M_repository_simpel extends MY_Model {
 
 	public function getFaculties()
 	{
-		return $this->db2->get('fakultas')->result();
+		return $this->db2->order_by('FAKULTAS_ID','ASC')->get_where('fakultas')->result();
 
 	}
 
 	public function getDepts(){
 		return $this->db2->get('jurusan')->result();
+	}
+
+	public function getFakultasName($id){
+		return $this->db2->query('select fakultas_nama from fakultas,jurusan where fakultas.fakultas_id=jurusan.fakultas_id and jurusan_id='.$id)->first_row()->fakultas_nama;
 	}
 
 }
